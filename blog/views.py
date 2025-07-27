@@ -1,0 +1,20 @@
+from django.shortcuts import render, get_object_or_404
+from .models import Post
+from django.utils.timesince import timesince
+from django.http import Http404
+from django.utils.timezone import now
+
+
+def blog_home(request):
+    post = Post.objects.filter(status=True)
+    if not post.exists():
+        raise Http404("No posts found")
+    context = {'post': post, }
+    return render(request, 'blog/blog-home.html', context)
+
+
+def blog_single(request, pid):
+
+    post = get_object_or_404(Post, pk=pid, status=1)
+    context = {'post': post}
+    return render(request, 'blog/blog-single.html', context)
