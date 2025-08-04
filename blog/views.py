@@ -18,3 +18,8 @@ def blog_single(request, pid):
     post = get_object_or_404(Post, pk=pid, status=1)
     context = {'post': post}
     return render(request, 'blog/blog-single.html', context)
+
+def category_link(request, cat_name):
+    post= Post.objects.filter(status=1).filter(category__name=cat_name)
+    context= {'post':post}
+    return render(request,'blog/blog-home.html',context)

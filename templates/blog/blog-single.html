@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%} 
+{%load blog_tags%}
 {%block content%}
 <body>
   <!-- start banner Area -->
@@ -399,8 +400,7 @@
                 </li>
                 <li>
                   <a href="#" class="d-flex justify-content-between">
-                    <p>Lifestyle</p>
-                    <p>24</p>
+                   {% category_count %}
                   </a>
                 </li>
                 <li>

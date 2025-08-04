@@ -1,0 +1,11 @@
+{%load blog_tags %}
+{%load static%}
+
+{% for name, count in categories.items %}
+<li>
+  <a href="#" class="d-flex justify-content-between">
+    <p>{{ name }}</p>
+    <p style="color: black;">{{ count }}</p>
+  </a>
+</li>
+{% endfor %}

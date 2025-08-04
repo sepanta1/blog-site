@@ -1,0 +1,16 @@
+{% load static %}
+{% for i in posts %}
+<div class="single-post-list d-flex flex-row align-items-center">
+  <div class="thumb">
+    <img class="img-fluid" src="{% static 'img/blog/pp1.jpg' %}" alt="">
+  </div>
+  <div class="details">
+    <a href="{% url 'blog:blog-single' pid=i.id %}">
+      <h6>{{ i.title }}</h6>
+    </a>
+    <p>02 Hours ago fake</p>
+  </div>
+</div>
+{% endfor %}
+
+
