@@ -5,13 +5,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 class Post(models.Model):
-    # image =
+    image =models.ImageField(upload_to='blog/',default='blog/default.jpg',null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
 
     title = models.CharField(max_length=255)
     content = models.TextField()
     # tags =
-    category =models.ForeignKey(Category , on_delete=models.CASCADE, default=None, null=True)
+    category =models.ManyToManyField(Category, default=None)
     counted_views = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
     published_date = models.DateTimeField(null=True)

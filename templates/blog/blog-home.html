@@ -97,14 +97,18 @@
           <div class="single-post row">
             <div class="col-lg-3  col-md-3 meta-details">
               <ul class="tags">
-                <li><a href="#">{{i.category.name}},</a></li>
-                <li><a href="#">Technology<fake>,</a></li>
-
+                {% for j in i.category.all %}
+                <li>
+                  <a href="#">
+                    {{ j.name }}{% if not forloop.last %}, {% endif %}
+                  </a>
+                </li>
+                {%endfor%}
               </ul>
               <div class="user-details row">
                 <p class="user-name col-lg-12 col-md-12 col-6"><a href="#">{{i.author}}</a> <span
                     class="lnr lnr-user"></span></p>
-                <p class="date col-lg-12 col-md-12 col-6"><a href="#">{{i.published_date|date:"D d M Y"}}</a> <span
+                <p class="date col-lg-12 col-md-12 col-6"><a href="#">{{i.published_date|date:"d M Y"}}</a> <span
                     class="lnr lnr-calendar-full"></span></p>
                 <p class="view col-lg-12 col-md-12 col-6"><a href="#">{{i.counted_views}}</a> <span
                     class="lnr lnr-eye"></span>
@@ -115,7 +119,7 @@
             </div>
             <div class="col-lg-9 col-md-9 ">
               <div class="feature-img">
-                <img class="img-fluid" src="{% static 'img/blog/feature-img1.jpg' %}" alt="">
+                <img class="img-fluid" src="{{i.image.url}}" alt="">
               </div>
               <a class="posts-title" href="{% url 'blog:blog-single' pid=i.id %}">
                 <h3>{{i.title}}</h3>
@@ -163,25 +167,8 @@
                 <button type="submit"><i class="fa fa-search"></i></button>
               </form>
             </div>
-            <div class="single-sidebar-widget user-info-widget">
-              <img src="{% static 'img/blog/user-info.png' %}" alt="">
-              <a href="#">
-                <h4>Sepanta</h4>
-              </a>
-              <p>
-                django dev
-              </p>
-              <ul class="social-links">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-github"></i></a></li>
-                <li><a href="#"><i class="fa fa-behance"></i></a></li>
-              </ul>
-              <p>
-                Boot camps have its supporters andit sdetractors. Some people do not understand why you should have to
-                spend money on boot camp when you can get. Boot camps have itssuppor ters andits detractors.
-              </p>
-            </div>
+            {% include 'blog/writer.html' %}
+           
             <div class="single-sidebar-widget popular-post-widget">
               <h4 class="popular-title">Popular Posts</h4>
               <div class="popular-post-list">
