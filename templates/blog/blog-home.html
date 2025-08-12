@@ -99,7 +99,7 @@
               <ul class="tags">
                 {% for j in i.category.all %}
                 <li>
-                  <a href="#">
+                  <a href="{% url 'blog:cat_link' cat_name=j.name %}">
                     {{ j.name }}{% if not forloop.last %}, {% endif %}
                   </a>
                 </li>
@@ -136,37 +136,48 @@
           <nav class="blog-pagination justify-content-center d-flex">
             <ul class="pagination">
               <li class="page-item">
-                <a href="#" class="page-link" aria-label="Previous">
+                {% if post.has_previous %}
+                <a href="?page={{ post.previous_page_number }}" class="page-link" aria-label="Previous">
+                {% endif %}
                   <span aria-hidden="true">
                     <span class="lnr lnr-chevron-left"></span>
                   </span>
                 </a>
               </li>
-              <li class="page-item"><a href="#" class="page-link">01</a></li>
-              <li class="page-item active"><a href="#" class="page-link">02</a></li>
-              <li class="page-item"><a href="#" class="page-link">03</a></li>
+              {%for index in post.paginator.page_range%}
+              {%if post.number == index%}
+              <li class="page-item active"><a href="?page={{index}}" class="page-link">{{index}}</a></li>
+              {% else %}
+              <li class="page-item"><a href="?page={{index}}" class="page-link">{{index}}</a></li>
+               
+              {% comment %}<li class="page-item"><a href="#" class="page-link">03</a></li>
               <li class="page-item"><a href="#" class="page-link">04</a></li>
-              <li class="page-item"><a href="#" class="page-link">09</a></li>
+              <li class="page-item"><a href="#" class="page-link">09</a></li> {% endcomment %}
+              {%endif%}
+              {%endfor%}
+              {% if post.has_next %}
               <li class="page-item">
-                <a href="#" class="page-link" aria-label="Next">
+                <li><a href="?page={{ post.next_page_number }}">Next</a></li>
                   <span aria-hidden="true">
                     <span class="lnr lnr-chevron-right"></span>
                   </span>
                 </a>
               </li>
+               {% endif %}
             </ul>
           </nav>
 
         </div>
         <div class="col-lg-4 sidebar-widgets">
           <div class="widget-wrap">
-            <div class="single-sidebar-widget search-widget">
+            {% include 'search.html' %}
+            <!-- <div class="single-sidebar-widget search-widget">
               <form class="search-form" action="#">
                 <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''"
                   onblur="this.placeholder = 'Search Posts'">
                 <button type="submit"><i class="fa fa-search"></i></button>
               </form>
-            </div>
+            </div> -->
             {% include 'blog/writer.html' %}
            
             <div class="single-sidebar-widget popular-post-widget">
