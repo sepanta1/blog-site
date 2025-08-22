@@ -32,4 +32,3 @@ class Contact(models.Model):
 
     class Meta:
         get_latest_by = 'created_date'
-# Create your models here.
