@@ -11,3 +11,8 @@ class Contact(models.Model):
 
     class Meta:
         get_latest_by = 'created_date'
+
+
+class Newsletter(models.Model):
+    email = models.EmailField(unique=True)
+    created_date = models.DateTimeField(auto_now_add=True)
