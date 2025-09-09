@@ -26,14 +26,20 @@ SECRET_KEY = 'django-insecure-cr@+ymjrliwr*(kg(a0@4d13cq!o($nnn%fk&714z@thf4%f_b
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+#robots
+ROBOTS_USE_HOST = False
+#for django sites framework
+SITE_ID = 2
 # Application definition
 
 INSTALLED_APPS = [
     
     'website',
     'blog',
+    'robots',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

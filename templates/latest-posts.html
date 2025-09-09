@@ -1,4 +1,5 @@
 {% load static %}
+{%load humanize%}
 {% for i in posts %}
 <div class="single-post-list d-flex flex-row align-items-center">
   <div class="thumb">
@@ -8,7 +9,7 @@
     <a href="{% url 'blog:blog-single' pid=i.id %}">
       <h6>{{ i.title }}</h6>
     </a>
-    <p>02 Hours ago fake</p>
+    <p>{{i.created_date|naturalday}}</p>
   </div>
 </div>
 {% endfor %}

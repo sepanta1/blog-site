@@ -8,4 +8,5 @@ urlpatterns = [
     path('author/<str:author_name>',views.blog_home,name='author_name'),
     path('search/',views.blog_search,name='search'),
     path('test/',views.test,name='test'),
+    
 ]

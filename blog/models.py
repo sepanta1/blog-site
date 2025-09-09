@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 class Category(models.Model):
     name= models.CharField(max_length=50)
     def __str__(self):
@@ -17,9 +18,12 @@ class Post(models.Model):
     published_date = models.DateTimeField(null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-
+    def get_absolute_url(self):
+        return reverse("blog:blog-single", kwargs={"pid": self.id})
     class Meta:
         get_latest_by = 'created_date'
+    
+    
 
 
 class Contact(models.Model):
