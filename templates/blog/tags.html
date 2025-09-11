@@ -1,0 +1,10 @@
+{%load static%}
+<div class="single-sidebar-widget tag-cloud-widget">
+              <h4 class="tagcloud-title">Tag Clouds</h4>
+
+              {% for tag in post.tags.all %}
+              <ul>
+                <li><a href="#">{{tag.name}}</a></li>
+              </ul>
+              {% endfor %}
+            </div>

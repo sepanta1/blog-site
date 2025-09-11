@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 from django.urls import reverse
 class Category(models.Model):
     name= models.CharField(max_length=50)
@@ -8,10 +9,9 @@ class Category(models.Model):
 class Post(models.Model):
     image =models.ImageField(upload_to='blog/',default='blog/default.jpg',null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
-
     title = models.CharField(max_length=255)
     content = models.TextField()
-    # tags =
+    tags =TaggableManager()
     category =models.ManyToManyField(Category, default=None)
     counted_views = models.IntegerField(default=0)
     status = models.BooleanField(default=False)
