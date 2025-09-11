@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'website',
     'blog',
     'taggit',
+    'tinymce',
     'robots',
     'django.contrib.sites',
     'django.contrib.sitemaps',
