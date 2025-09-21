@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     
     'website',
     'blog',
+    'captcha',
     'taggit',
     'tinymce',
     'robots',

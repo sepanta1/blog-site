@@ -38,6 +38,8 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
+    #captcha module
+    path('captcha/', include('captcha.urls')),
     #tinymce editor module
     path('tinymce/', include('tinymce.urls')),
 ]
