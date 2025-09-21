@@ -32,6 +32,10 @@ ROBOTS_USE_HOST = False
 SITE_ID = 2
 #for django taggit
 TAGGIT_CASE_INSENSITIVE = True
+#admin captcha
+MULTI_CAPTCHA_ADMIN = {
+    'engine': 'simple-captcha',
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'website',
     'blog',
     'captcha',
+    'multi_captcha_admin',
     'taggit',
     'tinymce',
     'robots',
