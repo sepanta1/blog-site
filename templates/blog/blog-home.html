@@ -113,7 +113,7 @@
                 <p class="view col-lg-12 col-md-12 col-6"><a href="#">{{i.counted_views}}</a> <span
                     class="lnr lnr-eye"></span>
                 </p>
-                <p class="comments col-lg-12 col-md-12 col-6"><a href="#">fake Comments</a> <span
+                <p class="comments col-lg-12 col-md-12 col-6"><a href="#">{% comments_count i.id %} Comments</a> <span
                     class="lnr lnr-bubble"></span></p>
               </div>
             </div>
@@ -195,7 +195,7 @@
                 {% category_count %}
               </ul>
             </div>
-            <div class="single-sidebar-widget newsletter-widget">
+            {% comment %} <div class="single-sidebar-widget newsletter-widget">
               <h4 class="newsletter-title">Newsletter</h4>
               <p>
                 Here, I focus on a range of items and features that we use in life without
@@ -217,7 +217,7 @@
               <p class="text-bottom">
                 You can unsubscribe at any time
               </p>
-            </div>
+            </div> {% endcomment %}
             <!-- <div class="single-sidebar-widget tag-cloud-widget">
               <h4 class="tagcloud-title">Tag Clouds</h4>
               <ul>

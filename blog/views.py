@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-from .models import Post
-
+from .models import Post,Comments
+from .forms import Comments_form
+from django.contrib import messages
 from django.utils.timesince import timesince
 from django.http import Http404
 from django.utils.timezone import now
@@ -26,14 +27,22 @@ def blog_home(request, cat_name=None, author_name=None):
 
 
 def blog_single(request, pid):
-
     post = get_object_or_404(Post, pk=pid, status=1)
-
+    comments=Comments.objects.filter(parent_post=post.id,approved=True)
+    if request.method =="POST":
+        form=Comments_form(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, "Comment has been sent for approval")
+            return redirect("blog:blog-single", pid=post.pk) 
+        else:
+            messages.add_message(request, messages.ERROR, "Opps somthing went wrong!")
+    form = Comments_form()
     next_post = Post.objects.filter(
         status=1, pk__gt=pid).order_by('pk').first()
     prev_post = Post.objects.filter(
         status=1, pk__lt=pid).order_by('-pk').first()
-    context = {'post': post, 'next_post': next_post, 'prev_post': prev_post, }
+    context = {'post': post, 'next_post': next_post, 'prev_post': prev_post,'comments':comments,'form':form}
     return render(request, 'blog/blog-single.html', context)
 
 

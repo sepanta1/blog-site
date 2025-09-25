@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%} 
+{%load humanize%}
 {%load blog_tags%}
 {%block content%}
 <body>
@@ -53,7 +54,7 @@
                   <a href="#">{{post.counted_views}} Views</a> <span class="lnr lnr-eye"></span>
                 </p>
                 <p class="comments col-lg-12 col-md-12 col-6">
-                  <a href="#">06 Comments</a>
+                  <a href="#">{{comments|length}} comments</a>
                   <span class="lnr lnr-bubble"></span>
                 </p>
                 <ul class="social-links col-lg-12 col-md-12 col-6">
@@ -131,7 +132,7 @@
                 </div>
                 <div class="detials">
                   <p>Prev Post</p>
-                  <a href="#"><h4>{{prev_post.title}}</h4></a>
+                  <a href="{% url "blog:blog-single" pid=prev_post.id %}"><h4>{{prev_post.title}}</h4></a>
                 </div>
               </div>
               {%endif%}
@@ -142,7 +143,7 @@
               
                 <div class="detials">
                   <p>Next Post</p>
-                  <a href="#"><h4>{{next_post.title}}</h4></a>
+                  <a href="{% url "blog:blog-single" pid=next_post.id %}"><h4>{{next_post.title}}</h4></a>
                 </div>
                 <div class="arrow">
                   <a href="#"
@@ -159,7 +160,8 @@
             </div>
           </div>
           <div class="comments-area">
-            <h4>05 Comments</h4>
+            <h4>{{comments|length}} comment</h4>
+            {% for c in comments %}
             <div class="comment-list">
               <div class="single-comment justify-content-between d-flex">
                 <div class="user justify-content-between d-flex">
@@ -167,9 +169,9 @@
                     <img src="{%static 'img/blog/c1.jpg'%}" alt="" />
                   </div>
                   <div class="desc">
-                    <h5><a href="#">Emilly Blunt</a></h5>
-                    <p class="date">December 4, 2017 at 3:12 pm</p>
-                    <p class="comment">Never say goodbye till the end comes!</p>
+                    <h5><a href="#">{{c.name}}</a></h5>
+                    <p class="date">{{c.created_date|naturalday}}</p>
+                    <p class="comment">{{c.subject}}</p>
                   </div>
                 </div>
                 <div class="reply-btn">
@@ -177,84 +179,19 @@
                 </div>
               </div>
             </div>
-            <div class="comment-list left-padding">
-              <div class="single-comment justify-content-between d-flex">
-                <div class="user justify-content-between d-flex">
-                  <div class="thumb">
-                    <img src="{%static 'img/blog/c2.jpg'%}" alt="" />
-                  </div>
-                  <div class="desc">
-                    <h5><a href="#">Elsie Cunningham</a></h5>
-                    <p class="date">December 4, 2017 at 3:12 pm</p>
-                    <p class="comment">Never say goodbye till the end comes!</p>
-                  </div>
-                </div>
-                <div class="reply-btn">
-                  <a href="" class="btn-reply text-uppercase">reply</a>
-                </div>
-              </div>
-            </div>
-            <div class="comment-list left-padding">
-              <div class="single-comment justify-content-between d-flex">
-                <div class="user justify-content-between d-flex">
-                  <div class="thumb">
-                    <img src="{%static 'img/blog/c3.jpg'%}" alt="" />
-                  </div>
-                  <div class="desc">
-                    <h5><a href="#">Annie Stephens</a></h5>
-                    <p class="date">December 4, 2017 at 3:12 pm</p>
-                    <p class="comment">Never say goodbye till the end comes!</p>
-                  </div>
-                </div>
-                <div class="reply-btn">
-                  <a href="" class="btn-reply text-uppercase">reply</a>
-                </div>
-              </div>
-            </div>
-            <div class="comment-list">
-              <div class="single-comment justify-content-between d-flex">
-                <div class="user justify-content-between d-flex">
-                  <div class="thumb">
-                    <img src="{%static 'img/blog/c4.jpg'%}" alt="" />
-                  </div>
-                  <div class="desc">
-                    <h5><a href="#">Maria Luna</a></h5>
-                    <p class="date">December 4, 2017 at 3:12 pm</p>
-                    <p class="comment">Never say goodbye till the end comes!</p>
-                  </div>
-                </div>
-                <div class="reply-btn">
-                  <a href="" class="btn-reply text-uppercase">reply</a>
-                </div>
-              </div>
-            </div>
-            <div class="comment-list">
-              <div class="single-comment justify-content-between d-flex">
-                <div class="user justify-content-between d-flex">
-                  <div class="thumb">
-                    <img src="{%static 'img/blog/c5.jpg'%}" alt="" />
-                  </div>
-                  <div class="desc">
-                    <h5><a href="#">Ina Hayes</a></h5>
-                    <p class="date">December 4, 2017 at 3:12 pm</p>
-                    <p class="comment">Never say goodbye till the end comes!</p>
-                  </div>
-                </div>
-                <div class="reply-btn">
-                  <a href="" class="btn-reply text-uppercase">reply</a>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
           <div class="comment-form">
             <h4>Leave a Comment</h4>
-            <form>
+            <form method="post" action={% url "blog:blog-single" pid=post.id %}>
+              {% csrf_token %}
+              <input type="hidden" name="parent_post" value={{post.id}}>
               <div class="form-group form-inline">
                 <div class="form-group col-lg-6 col-md-12 name">
                   <input
                     type="text"
                     class="form-control"
-                    id="name"
+                    name="name"
                     placeholder="Enter Name"
                     onfocus="this.placeholder = ''"
                     onblur="this.placeholder = 'Enter Name'"
@@ -264,7 +201,7 @@
                   <input
                     type="email"
                     class="form-control"
-                    id="email"
+                    name="email"
                     placeholder="Enter email address"
                     onfocus="this.placeholder = ''"
                     onblur="this.placeholder = 'Enter email address'"
@@ -275,7 +212,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="subject"
+                  name="subject"
                   placeholder="Subject"
                   onfocus="this.placeholder = ''"
                   onblur="this.placeholder = 'Subject'"
@@ -292,7 +229,7 @@
                   required=""
                 ></textarea>
               </div>
-              <a href="#" class="primary-btn text-uppercase">Post Comment</a>
+              <button type="submit" class="primary-btn text-uppercase">Post Comment</button>
             </form>
           </div>
         </div>
@@ -401,7 +338,7 @@
             
               </ul>
             </div>
-            <div class="single-sidebar-widget newsletter-widget">
+            {% comment %} <div class="single-sidebar-widget newsletter-widget">
               <h4 class="newsletter-title">Newsletter</h4>
               <p>
                 Here, I focus on a range of items and features that we use in
@@ -428,7 +365,7 @@
                 <a href="#" class="bbtns">Subcribe</a>
               </div>
               <p class="text-bottom">You can unsubscribe at any time</p>
-            </div>
+            </div> {% endcomment %}
               {% include "blog/tags.html" %}
           </div>
         </div>

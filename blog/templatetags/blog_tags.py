@@ -1,5 +1,5 @@
 from django import template
-from blog.models import Post, Category
+from blog.models import Post, Category,Comments
 
 register = template.Library()
 
@@ -25,3 +25,10 @@ def category_count():
        
 
     return {'categories': cat_dict}
+
+@register.simple_tag(name='comments_count')
+def comments_count(pid):
+    post=Post.objects.get(pk=pid)
+    comments=Comments.objects.filter(parent_post=post.id,approved=True).count()
+    context={'post':post,'comments':comments}
+    return context['comments']

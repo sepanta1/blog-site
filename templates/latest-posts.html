@@ -3,7 +3,7 @@
 {% for i in posts %}
 <div class="single-post-list d-flex flex-row align-items-center">
   <div class="thumb">
-    <img class="img-fluid" src="{% static 'img/blog/pp1.jpg' %}" alt="">
+    <img class="img-fluid" src="{{i.image.url}}" alt="">
   </div>
   <div class="details">
     <a href="{% url 'blog:blog-single' pid=i.id %}">
