@@ -39,7 +39,7 @@ MULTI_CAPTCHA_ADMIN = {
 # Application definition
 
 INSTALLED_APPS = [
-    
+    'accounts',
     'website',
     'blog',
     'captcha',
