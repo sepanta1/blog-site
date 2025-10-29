@@ -42,7 +42,7 @@ class Contact(models.Model):
         
 class Comments(models.Model):
     name=models.CharField(max_length=255)
-    email=models.EmailField()
+    email=models.EmailField(blank=True, null=True)
     subject=models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
