@@ -5,15 +5,20 @@ A full-featured blog website built using the Django framework.
 This project is a personal blog application developed with Django.
 It utilizes a ready-made frontend template for the user interface and leverages many of Django's built-in features, such as authentication, admin panel, and ORM. Additionally, it integrates useful third-party packages to enhance functionality.
 
+## Screenshots
+
 ## Features
 
-*  User registration and authentication
-*  Post creation, editing, and deletion
-*  Comment system
-*  Category and tag management
-*  Search functionality
-*  Responsive design using a pre-built template
-*  Admin dashboard for content management
+*  User registration, login, and authentication
+*  Create, edit, and delete blog posts with rich text editing (TinyMCE)
+*  Image uploads for posts
+*  Hierarchical and threaded comment system
+*  Post categorization and tagging
+*  Full-text search across posts
+*  Simple CAPTCHA for forms (to prevent spam)
+*  Responsive design optimized for mobile and desktop
+*  Built-in Django admin panel for easy content management
+*  Separate settings for development and production
 
 ## Technologies Used
 
