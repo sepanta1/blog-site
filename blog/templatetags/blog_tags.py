@@ -1,5 +1,5 @@
 from django import template
-from blog.models import Post, Category, Comments
+from blog.models import Post, Category, Comment
 
 register = template.Library()
 
@@ -62,6 +62,6 @@ def comments_count(pid):
     post = Post.objects.get(pk=pid)
     
     # Count only approved comments linked to this post
-    comments = Comments.objects.filter(parent_post=post.id, approved=True).count()
+    comments = Comment.objects.filter(parent_post=post.id, approved=True).count()
     
     return comments

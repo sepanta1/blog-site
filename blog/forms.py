@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comments
+from .models import Comment
 
 class Comments_form(forms.ModelForm):
     """
@@ -9,5 +9,5 @@ class Comments_form(forms.ModelForm):
     with a specific parent post.
     """
     class Meta:
-        model=Comments
+        model=Comment
         fields=['parent_post','name','email','subject']

@@ -51,7 +51,7 @@ class Contact(models.Model):
         get_latest_by = 'created_date'
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     """Model for user comments on blog posts, supporting threaded replies."""
     name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)

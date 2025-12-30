@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
-from .models import Post, Comments
+from .models import Post, Comment
 from .forms import Comments_form
 from django.contrib import messages
 from django.utils.timesince import timesince
@@ -38,7 +38,7 @@ def blog_single(request, pid):
     and handles new comment submission.
     """
     post = get_object_or_404(Post, pk=pid, status=1)
-    comments = Comments.objects.filter(parent_post=post.id, approved=True)
+    comments = Comment.objects.filter(parent_post=post.id, approved=True)
     if request.method == "POST":
         form = Comments_form(request.POST)
         if form.is_valid():

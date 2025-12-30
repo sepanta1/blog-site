@@ -4,8 +4,6 @@
 {%block content%}
 
 <body>
-
-
   <!-- start banner Area -->
   <section class="banner-area relative blog-home-banner" id="home">
     <div class="overlay overlay-bg"></div>
@@ -149,21 +147,16 @@
               <li class="page-item active"><a href="?page={{index}}" class="page-link">{{index}}</a></li>
               {% else %}
               <li class="page-item"><a href="?page={{index}}" class="page-link">{{index}}</a></li>
-               
-              {% comment %}<li class="page-item"><a href="#" class="page-link">03</a></li>
-              <li class="page-item"><a href="#" class="page-link">04</a></li>
-              <li class="page-item"><a href="#" class="page-link">09</a></li> {% endcomment %}
               {%endif%}
               {%endfor%}
               {% if post.has_next %}
-              <li class="page-item">
-                <li><a href="?page={{ post.next_page_number }}">Next</a></li>
-                  <span aria-hidden="true">
-                    <span class="lnr lnr-chevron-right"></span>
-                  </span>
+              <li class="page-item {% if not post.has_next %}disabled{% endif %}">
+                <a class="page-link" href="{% if post.has_next %}?page={{ post.next_page_number }}{% else %}#{% endif %}" aria-label="Next">
+                  <span class="d-none d-md-inline">Next</span>
+                  <span aria-hidden="true">&rsaquo;</span>
                 </a>
               </li>
-               {% endif %}
+              {% endif %}
             </ul>
           </nav>
 
@@ -171,13 +164,6 @@
         <div class="col-lg-4 sidebar-widgets">
           <div class="widget-wrap">
             {% include 'search.html' %}
-            <!-- <div class="single-sidebar-widget search-widget">
-              <form class="search-form" action="#">
-                <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Search Posts'">
-                <button type="submit"><i class="fa fa-search"></i></button>
-              </form>
-            </div> -->
             {% include 'blog/writer.html' %}
            
             <div class="single-sidebar-widget popular-post-widget">
@@ -186,55 +172,13 @@
                 {% latest_posts %}
               </div>
             </div>
-            <div class="single-sidebar-widget ads-widget">
-              <a href="#"><img class="img-fluid" src="{% static 'img/blog/ads-banner.jpg' %}" alt=""></a>
-            </div>
+        
             <div class="single-sidebar-widget post-category-widget">
               <h4 class="category-title">Post Catgories</h4>
               <ul class="cat-list">
                 {% category_count %}
               </ul>
             </div>
-            {% comment %} <div class="single-sidebar-widget newsletter-widget">
-              <h4 class="newsletter-title">Newsletter</h4>
-              <p>
-                Here, I focus on a range of items and features that we use in life without
-                giving them a second thought.
-              </p>
-              <div class="form-group d-flex flex-row">
-                <div class="col-autos">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email"
-                      onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
-                  </div>
-                </div>
-                <a href="#" class="bbtns">Subcribe</a>
-              </div>
-              <p class="text-bottom">
-                You can unsubscribe at any time
-              </p>
-            </div> {% endcomment %}
-            <!-- <div class="single-sidebar-widget tag-cloud-widget">
-              <h4 class="tagcloud-title">Tag Clouds</h4>
-              <ul>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li><a href="#">Architecture</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li><a href="#">Food</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Art</a></li>
-                <li><a href="#">Adventure</a></li>
-                <li><a href="#">Food</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Adventure</a></li>
-              </ul>
-            </div> -->
           </div>
         </div>
       </div>
