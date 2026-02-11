@@ -1,4 +1,4 @@
-from mysite.settings import *
+from .base import *
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-cr@+ymjrliwr*(kg(a0@4d13cq!o($nnn%fk&714z@thf4%f_b'
 

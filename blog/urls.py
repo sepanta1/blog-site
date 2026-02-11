@@ -1,10 +1,25 @@
 from django.urls import path
+
 from . import views
-app_name = 'blog'
+
+app_name = "blog"
 urlpatterns = [
-    path('blog-home/', views.blog_home, name='blog-home'),
-    path('<int:pid>/', views.blog_single, name='blog-single'),
-    path('category/<str:cat_name>', views.blog_home, name='cat_link'),
-    path('author/<str:author_name>', views.blog_home, name='author_name'),
-    path('search/', views.blog_search, name='search'),
+    path("blog-home/", views.blog_home, name="blog-home"),
+    path("<int:pid>/", views.blog_single, name="blog-single"),
+    path("category/<str:cat_name>", views.blog_home, name="cat_link"),
+    path("author/<str:author_name>", views.blog_home, name="author_name"),
+    path("search/", views.blog_search, name="search"),
+    path("posts/create/", views.PostCreateView.as_view(), name="post-create"),
+    path("posts/<int:pk>/update/", views.PostUpdateView.as_view(), name="post-update"),
+    path("posts/<int:pk>/delete/", views.PostDeleteView.as_view(), name="post-delete"),
+    path(
+        "post/<int:post_id>/comment/",
+        views.CommentCreateView.as_view(),
+        name="comment-create",
+    ),
+    path(
+        "post/<int:post_id>/comment/<int:parent_id>/reply/",
+        views.CommentCreateView.as_view(),
+        name="comment-reply",
+    ),
 ]

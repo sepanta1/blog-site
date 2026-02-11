@@ -1,62 +1,120 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
-from .models import Post, Comment
-from .forms import Comments_form
 from django.contrib import messages
-from django.utils.timesince import timesince
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.http import Http404
-from django.utils.timezone import now
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import CreateView, DeleteView, UpdateView
+
+from .forms import CommentForm
+from .models import Comment, Post
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        post = get_object_or_404(Post, pk=self.kwargs["post_id"])
+        form.instance.parent_post = post
+
+        parent_id = self.kwargs.get("parent_id")
+        if parent_id:
+            form.instance.parent = get_object_or_404(Comment, pk=parent_id)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.parent_post.get_absolute_url()
+
+
+class OwnerRequiredMixin:
+    owner_field = "author"
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+
+        if getattr(obj, self.owner_field) != self.request.user:
+            raise PermissionDenied("You do not own this object.")
+
+        return obj
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ["title", "content"]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
+    model = Post
+    fields = ["title", "content"]
+
+
+class PostDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
+    model = Post
 
 
 def blog_home(request, cat_name=None, author_name=None):
     """
     Displays the main blog home page with a list of published posts.
     Supports optional filtering by category or author.
-    Posts are paginated (2 per page).
     """
-    post = Post.objects.filter(status=True).order_by('-published_date')
+    post = Post.objects.filter(status=True).order_by("-published_date")
     if cat_name:
-        post = post.filter(
-            category__name=cat_name)
+        post = post.filter(category__name=cat_name)
     if author_name:
-        post = post.filter(
-            author__username=author_name)
+        post = post.filter(author__username=author_name)
     if not post.exists():
         raise Http404("No posts found")
     p = Paginator(post, 2)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     post = p.get_page(page_number)  # returns the desired page object
 
-    context = {'post': post}
-    return render(request, 'blog/blog-home.html', context)
+    context = {"post": post}
+    return render(request, "blog/blog-home.html", context)
 
 
 def blog_single(request, pid):
-    """
-    Renders the detail page for a single blog post.
-    Shows the post, approved comments, previous/next post links,
-    and handles new comment submission.
-    """
     post = get_object_or_404(Post, pk=pid, status=1)
-    comments = Comment.objects.filter(parent_post=post.id, approved=True)
+
+    comments = Comment.objects.filter(
+        parent_post=post, parent__isnull=True, approved=True
+    )
+
     if request.method == "POST":
-        form = Comments_form(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.SUCCESS,
-                                 "Comment has been sent for approval")
+            comment = form.save(commit=False)
+            comment.parent_post = post
+
+            parent_id = request.POST.get("parent_id")
+            if parent_id:
+                comment.parent = Comment.objects.get(id=parent_id)
+
+            comment.save()
+
+            messages.success(request, "Comment has been sent for approval")
             return redirect("blog:blog-single", pid=post.pk)
         else:
-            messages.add_message(request, messages.ERROR,
-                                 "Opps somthing went wrong!")
-    form = Comments_form()
-    next_post = Post.objects.filter(
-        status=1, pk__gt=pid).order_by('pk').first()
-    prev_post = Post.objects.filter(
-        status=1, pk__lt=pid).order_by('-pk').first()
-    context = {'post': post, 'next_post': next_post,
-               'prev_post': prev_post, 'comments': comments, 'form': form}
-    return render(request, 'blog/blog-single.html', context)
+            messages.error(request, "Oops something went wrong!")
+
+    form = CommentForm()
+
+    next_post = Post.objects.filter(status=1, pk__gt=pid).order_by("pk").first()
+    prev_post = Post.objects.filter(status=1, pk__lt=pid).order_by("-pk").first()
+
+    context = {
+        "post": post,
+        "next_post": next_post,
+        "prev_post": prev_post,
+        "comments": comments,
+        "form": form,
+    }
+    return render(request, "blog/blog-single.html", context)
 
 
 def blog_category(request, cat_name):
@@ -65,8 +123,8 @@ def blog_category(request, cat_name):
     Reuses the same template as the blog home page.
     """
     post = Post.objects.filter(status=1).filter(category__name=cat_name)
-    context = {'post': post}
-    return render(request, 'blog/blog-home.html', context)
+    context = {"post": post}
+    return render(request, "blog/blog-home.html", context)
 
 
 def blog_search(request):
@@ -75,7 +133,7 @@ def blog_search(request):
     Filters published posts by content containing the search term (case-insensitive).
     """
     post = Post.objects.filter(status=1)
-    if request.method == 'GET':
-        post = post.filter(content__icontains=request.GET.get('s'))
-    context = {'post': post}
-    return render(request, 'blog/blog-home.html', context)
+    if request.method == "GET":
+        post = post.filter(content__icontains=request.GET.get("s"))
+    context = {"post": post}
+    return render(request, "blog/blog-home.html", context)

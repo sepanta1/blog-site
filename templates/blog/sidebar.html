@@ -1,0 +1,18 @@
+{% load static %}
+{% load blog_tags %}
+<div class="col-lg-4 sidebar-widgets">
+    <div class="widget-wrap">
+        {% include 'search.html' %}
+        {% include 'blog/writer.html' %}
+        <div class="single-sidebar-widget popular-post-widget">
+            <h4 class="popular-title">Popular Posts</h4>
+            <div class="popular-post-list">{% latest_posts %}</div>
+        </div>
+        <div class="single-sidebar-widget post-category-widget">
+            <h4 class="category-title">Post Catgories</h4>
+            <ul class="cat-list">
+                {% category_count %}
+            </ul>
+        </div>
+    </div>
+</div>

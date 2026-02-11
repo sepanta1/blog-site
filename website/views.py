@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.contrib import messages
-
 from .forms import Contact_form, Newsletter_form
 
 
