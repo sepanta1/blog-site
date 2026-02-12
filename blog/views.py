@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     DeleteView,
@@ -11,8 +12,20 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import CommentForm
-from .models import Comment, Post
+from .forms import CommentForm, PostForm
+from .models import Category, Comment, Post
+
+
+class OwnerRequiredMixin:
+    owner_field = "author"
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+
+        if getattr(obj, self.owner_field) != self.request.user:
+            raise PermissionDenied("You do not own this object.")
+
+        return obj
 
 
 class CommentCreateView(CreateView):
@@ -33,25 +46,20 @@ class CommentCreateView(CreateView):
         return self.object.parent_post.get_absolute_url()
 
 
-class OwnerRequiredMixin:
-    owner_field = "author"
-
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-
-        if getattr(obj, self.owner_field) != self.request.user:
-            raise PermissionDenied("You do not own this object.")
-
-        return obj
-
-
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ["title", "content"]
+    template_name = "blog/post-form.html"
+    form_class = PostForm
+    success_url = reverse_lazy("blog:blog-home")
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
@@ -70,7 +78,7 @@ class BlogList(ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        queryset = Post.objects.filter(status=True).order_by("-published_date")
+        queryset = Post.objects.filter(status=True)
 
         cat_name = self.kwargs.get("cat_name")
         author_name = self.kwargs.get("author_name")

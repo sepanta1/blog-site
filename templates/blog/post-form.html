@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="bg-light min-vh-100 py-5">
+    <div class="container py-5 px-4 px-lg-0">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+          <!-- Header -->
+          <div class="text-center mb-5 pt-4">
+            <h1 class="display-4 fw-bold text-dark mb-3">Create New Post</h1>
+            <p class="lead text-muted">Share your thoughts with the world</p>
+          </div>
+          <!-- Main Form Card -->
+          <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            <div class="card-body p-0">
+              <form method="POST"
+                    enctype="multipart/form-data"
+                    class="needs-validation"
+                    novalidate>
+                {% csrf_token %}
+                <div class="p-5">
+                  <!-- Title -->
+                  <div class="mb-5">
+                    <label class="form-label fw-bold fs-5 mb-3">Post Title</label>
+                    <input type="text"
+                           name="title"
+                           class="form-control form-control-lg rounded-3 border-2"
+                           placeholder="Enter an engaging title..."
+                           required>
+                    <div class="invalid-feedback">Title is required</div>
+                  </div>
+                  <!-- Content -->
+                  <div class="mb-5">
+                    <label class="form-label fw-bold fs-5 mb-3">Content</label>
+                    <textarea name="content"
+                              rows="12"
+                              class="form-control rounded-3 border-2"
+                              placeholder="Write your post content here..."
+                              required></textarea>
+                    <div class="invalid-feedback">Content is required</div>
+                  </div>
+                  <!-- Row for Tags & Image -->
+                  <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                      <label class="form-label fw-bold fs-5 mb-3">Tags</label>
+                      <input type="text"
+                             name="tags"
+                             class="form-control form-control-lg rounded-3 border-2"
+                             placeholder="tag1, tag2, tag3">
+                      <small class="text-muted">Separate with commas</small>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label fw-bold fs-5 mb-3">Featured Image</label>
+                      <div class="border-2 border-dashed rounded-3 p-4 text-center bg-light h-100 d-flex flex-column justify-content-center">
+                        <input type="file"
+                               name="image"
+                               class="form-control rounded-3 border-0 bg-transparent"
+                               accept="image/*">
+                        <div class="mt-2 text-muted">
+                          <i class="fas fa-cloud-upload-alt fa-3x mb-2"></i>
+                          <div>Click to upload image</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Categories & Status -->
+                  <div class="row g-4 mb-5">
+                    <div class="col-lg-8">
+                      <label class="form-label fw-bold fs-5 mb-3">Categories</label>
+                      <div class="row g-3">
+                        <!-- Dynamic categories will be populated -->
+                        <div class="col-6 col-md-4">
+                          {% for category in categories %}
+                            <div class="col-6 col-md-4 col-lg-3">
+                              <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="category"
+                                       value="{{ category.id }}"
+                                       id="cat{{ category.id }}">
+                                <label class="form-check-label fw-semibold" for="cat{{ category.id }}">{{ category.name }}</label>
+                              </div>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <label class="form-label fw-bold fs-5 mb-3">Status</label>
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" name="status" id="status">
+                          <label class="form-check-label fw-semibold fs-6" for="status">Publish Now</label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 justify-content-between">
+                      <a href="{% url 'blog:blog-home' %}"
+                         class="btn btn-outline-secondary btn-lg px-5 py-3 rounded-3">
+                        <i class="fas fa-arrow-left me-2"></i>Cancel
+                      </a>
+                      <button type="submit"
+                              class="btn btn-primary btn-lg px-5 py-3 rounded-3 fw-bold">
+                        <i class="fas fa-paper-plane me-2"></i>Publish Post
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+:root {
+  --bs-border-radius-lg: 1rem;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.1);
+  transform: translateY(-2px);
+}
+
+.form-control-lg {
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+}
+
+textarea.form-control {
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.card {
+  border-radius: 1.5rem;
+}
+
+.btn {
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+    </style>
+  {% endblock %}

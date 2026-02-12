@@ -51,6 +51,7 @@ class Post(TimeStampedModel):
 
     class Meta:
         get_latest_by = "created_date"
+        ordering = ("-created_date",)
 
 
 class Contact(TimeStampedModel, Postable):

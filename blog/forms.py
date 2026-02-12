@@ -19,7 +19,6 @@ class PostForm(forms.ModelForm):
             "tags",
             "category",
             "status",
-            "published_date",
         ]
 
         widgets = {
