@@ -16,71 +16,8 @@
       </div>
     </section>
     <!-- End banner Area -->
-    <!-- Start top-category-widget Area -->
-    <section class="top-category-widget-area pt-90 pb-90 ">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="single-cat-widget">
-              <div class="content relative">
-                <div class="overlay overlay-bg"></div>
-                <a href="#" target="_blank">
-                  <div class="thumb">
-                    <img class="content-image img-fluid d-block mx-auto"
-                         src="{% static 'img/blog/cat-widget1.jpg' %}"
-                         alt="">
-                  </div>
-                  <div class="content-details">
-                    <h4 class="content-title mx-auto text-uppercase">Social life</h4>
-                    <span></span>
-                    <p>Enjoy your social life together</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="single-cat-widget">
-              <div class="content relative">
-                <div class="overlay overlay-bg"></div>
-                <a href="#" target="_blank">
-                  <div class="thumb">
-                    <img class="content-image img-fluid d-block mx-auto"
-                         src="{% static 'img/blog/cat-widget2.jpg' %}"
-                         alt="">
-                  </div>
-                  <div class="content-details">
-                    <h4 class="content-title mx-auto text-uppercase">Politics</h4>
-                    <span></span>
-                    <p>Be a part of politics</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="single-cat-widget">
-              <div class="content relative">
-                <div class="overlay overlay-bg"></div>
-                <a href="#" target="_blank">
-                  <div class="thumb">
-                    <img class="content-image img-fluid d-block mx-auto"
-                         src="{% static 'img/blog/cat-widget3.jpg' %}"
-                         alt="">
-                  </div>
-                  <div class="content-details">
-                    <h4 class="content-title mx-auto text-uppercase">Food</h4>
-                    <span></span>
-                    <p>Let the food be finished</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End top-category-widget Area -->
+    <br>
+    <br>
     <!-- Start post-content Area -->
     <section class="post-content-area">
       <div class="container">
@@ -129,18 +66,19 @@
             <nav class="blog-pagination justify-content-center d-flex">
               <ul class="pagination">
                 <li class="page-item">
-                  {% if post.has_previous %}
-                    <a href="?page={{ post.previous_page_number }}"
+                  {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}"
                        class="page-link"
                        aria-label="Previous">
-                    {% endif %}
-                    <span aria-hidden="true">
-                      <span class="lnr lnr-chevron-left"></span>
-                    </span>
-                  </a>
+                      <span aria-hidden="true">
+                        <span aria-hidden="true">&lsaquo;</span>
+                        <span class="lnr lnr-chevron-left">Last</span>
+                      </span>
+                    </a>
+                  {% endif %}
                 </li>
-                {% for index in post.paginator.page_range %}
-                  {% if post.number == index %}
+                {% for index in page_obj.paginator.page_range %}
+                  {% if page_obj.number == index %}
                     <li class="page-item active">
                       <a href="?page={{ index }}" class="page-link">{{ index }}</a>
                     </li>
@@ -150,10 +88,10 @@
                     </li>
                   {% endif %}
                 {% endfor %}
-                {% if post.has_next %}
-                  <li class="page-item {% if not post.has_next %}disabled{% endif %}">
+                {% if page_obj.has_next %}
+                  <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
                     <a class="page-link"
-                       href="{% if post.has_next %}?page={{ post.next_page_number }}{% else %}#{% endif %}"
+                       href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}"
                        aria-label="Next">
                       <span class="d-none d-md-inline">Next</span>
                       <span aria-hidden="true">&rsaquo;</span>
