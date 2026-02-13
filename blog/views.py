@@ -64,7 +64,15 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Post
-    fields = ["title", "content"]
+    template_name = "blog/update-post.html"
+    form_class = PostForm
+    success_url = reverse_lazy("blog:blog-home")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        context["update_mode"] = True
+        return context
 
 
 class PostDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
