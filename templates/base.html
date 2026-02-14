@@ -20,9 +20,7 @@
         <title>sepanta</title>
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
               rel="stylesheet">
-        <!--
-			CSS
-			============================================= -->
+        <!--CSS================= -->
         <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
         <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
@@ -34,28 +32,6 @@
     </head>
     <body>
         <header id="header">
-            <div class="header-top">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-sm-6 col-6 header-top-left">
-                            <ul>
-                                {% if user.is_authenticated %}
-                                    <li>
-                                        <a href="{% url "accounts:logout" %}">Logout</a>
-                                    </li>
-                                {% else %}
-                                    <li>
-                                        <a href="{% url 'accounts:login' %}">Login</a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url "accounts:signup" %}">SignUp</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="container main-menu">
                 <div class="row align-items-center justify-content-between d-flex">
                     <div id="logo">
@@ -79,10 +55,23 @@
                             </li>
                             {% if user.is_authenticated %}
                                 <li>
+                                    <a href="{% url "accounts:logout" %}">Logout</a>
+                                </li>
+                                <li>
                                     <a href="{% url "blog:my-posts" %}">My Posts</a>
                                 </li>
                                 <li>
+                                    <a href="{% url "blog:my-drafts" %}">My Drafts</a>
+                                </li>
+                                <li>
                                     <a href="{% url "blog:post-create" %}">Add Post</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{% url 'accounts:login' %}">Login</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "accounts:signup" %}">SignUp</a>
                                 </li>
                             {% endif %}
                         </ul>

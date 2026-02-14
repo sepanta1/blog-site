@@ -1,73 +1,83 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Login Form</title>
-    <link rel="stylesheet" href="{% static 'css/login_style.css'%}">
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h2>Login In</h2>
-                <p>Enter your credentials to access your account</p>
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            
-            <form class="login-form" id="loginForm" method="post" action="{% url "accounts:login" %}" novalidate>
-                {% csrf_token %}
-                <div class="form-group">
-                    <div class="input-wrapper">
-                        <input type="text" id="username" name="username" required autocomplete="username" placeholder=" ">
-                        <label for="username">username</label>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basic Login Form</title>
+        <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <h2>Login In</h2>
+                    <p>Enter your credentials to access your account</p>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <form class="login-form"
+                      id="loginForm"
+                      method="post"
+                      action="{% url "accounts:login" %}"
+                      novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text"
+                                   id="username"
+                                   name="username"
+                                   required
+                                   autocomplete=""
+                                   placeholder="username">
+                            <label for="username">username</label>
+                        </div>
+                        <span class="error-message" id="usernameError"></span>
                     </div>
-                    <span class="error-message" id="usernameError"></span>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-wrapper password-wrapper">
-                        <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
-                        <label for="password">Password</label>
-                        <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
-                            <span class="eye-icon"></span>
-                        </button>
+                    <div class="form-group">
+                        <div class="input-wrapper password-wrapper">
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   required
+                                   autocomplete=""
+                                   placeholder="current-password">
+                            <label for="password">Password</label>
+                            <button type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Toggle password visibility">
+                                <span class="eye-icon"></span>
+                            </button>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
                     </div>
-                    <span class="error-message" id="passwordError"></span>
+                    <div class="form-options">
+                        <label class="remember-wrapper">
+                            <p>{{ msg }}</p>
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+                <div class="signup-link">
+                    <p>
+                        Don't have an account? <a href="#">Create one</a>
+                    </p>
                 </div>
-
-                <div class="form-options">
-                    <label class="remember-wrapper">
-                        <p>{{msg}}</p>
-                    </label>
-                    <a href="#" class="forgot-password">Forgot password?</a>
+                <div class="success-message" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h3>Login Successful!</h3>
+                    <p>Redirecting to your dashboard...</p>
                 </div>
-
-                <button type="submit" class="login-btn">
-                    <span class="btn-text">Sign In</span>
-                    <span class="btn-loader"></span>
-                </button>
-            </form>
-
-            <div class="signup-link">
-                <p>Don't have an account? <a href="#">Create one</a></p>
-            </div>
-
-            <div class="success-message" id="successMessage">
-                <div class="success-icon">✓</div>
-                <h3>Login Successful!</h3>
-                <p>Redirecting to your dashboard...</p>
             </div>
         </div>
-    </div>
-
-    <script src="{% static "js/form-utils.js" %}"></script>
-</body>
+        <script src="{% static "js/form-utils.js" %}"></script>
+    </body>
 </html>

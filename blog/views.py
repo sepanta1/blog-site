@@ -78,22 +78,34 @@ class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Post
+    template_name = "blog/post-delete.html"
+    success_url = reverse_lazy("blog:my-posts")
 
 
-class MyPosts(ListView, LoginRequiredMixin, OwnerRequiredMixin):
+class MyPosts(LoginRequiredMixin, OwnerRequiredMixin, ListView):
     model = Post
     template_name = "blog/blog-home.html"
-    context_object_name = "post"
+    context_object_name = "posts"
     paginate_by = 10
 
     def get_queryset(self):
-        return Post.objects.filter(author=self.request.user)
+        return Post.objects.filter(author=self.request.user).filter(status=True)
+
+
+class MyDrafts(LoginRequiredMixin, OwnerRequiredMixin, ListView):
+    model = Post
+    template_name = "blog/blog-home.html"
+    context_object_name = "posts"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user).filter(status=False)
 
 
 class BlogList(ListView):
     model = Post
     template_name = "blog/blog-home.html"
-    context_object_name = "post"
+    context_object_name = "posts"
     paginate_by = 10
 
     def get_queryset(self):
@@ -178,18 +190,34 @@ def blog_category(request, cat_name):
     return render(request, "blog/blog-home.html", context)
 
 
-def blog_search(request):
-    """
-    Handles search functionality.
-    """
-    post = Post.objects.filter(status=1)
-    search_term = request.GET.get("s")
+class BlogSearch(ListView):
+    model = Post
+    template_name = "blog/blog-home.html"
+    context_object_name = "posts"
+    paginate_by = 10  
 
-    if request.method == "GET":
-        post = post.filter(title__icontains=search_term)
+    def get_queryset(self):
+        queryset = Post.objects.filter(status=True)
+        search_term = self.request.GET.get("s")
 
-    context = {"post": post}
-    return render(request, "blog/blog-home.html", context)
+        if search_term:
+            queryset = queryset.filter(title__icontains=search_term)
+
+        return queryset
+
+
+# def blog_search(request):
+#     """
+#     Handles search functionality.
+#     """
+#     post = Post.objects.filter(status=1)
+#     search_term = request.GET.get("s")
+
+#     if request.method == "GET":
+#         post = post.filter(title__icontains=search_term)
+
+#     context = {"posts": post}
+#     return render(request, "blog/blog-home.html", context)
 
 
 # def blog_single(request, pid):

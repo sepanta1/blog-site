@@ -10,7 +10,7 @@
         <div class="row d-flex align-items-center justify-content-center">
           <div class="about-content blog-header-content col-lg-12">
             <h1 class="text-white">Welcome to my site!</h1>
-            <p class="text-white">i'm sepanta and this is my blog project.</p>
+            <p class="text-white">I'm sepanta and this is my blog project.</p>
           </div>
         </div>
       </div>
@@ -23,14 +23,14 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 posts-list">
-            {% for i in post %}
+            {% for post in posts %}
               <div class="single-post row">
                 <div class="col-lg-3  col-md-3 meta-details">
                   <ul class="tags">
-                    {% for j in i.category.all %}
+                    {% for category in post.category.all %}
                       <li>
-                        <a href="{% url 'blog:cat_link' cat_name=j.name %}">
-                          {{ j.name }}
+                        <a href="{% url 'blog:cat_link' cat_name=category.name %}">
+                          {{ category.name }}
                           {% if not forloop.last %},{% endif %}
                         </a>
                       </li>
@@ -38,70 +38,36 @@
                   </ul>
                   <div class="user-details row">
                     <p class="user-name col-lg-12 col-md-12 col-6">
-                      <a href="#">{{ i.author }}</a> <span class="lnr lnr-user"></span>
+                      <a href="#">{{ post.author }}</a> <span class="lnr lnr-user"></span>
                     </p>
                     <p class="date col-lg-12 col-md-12 col-6">
-                      <a href="#">{{ i.published_date|date:"d M Y" }}</a> <span class="lnr lnr-calendar-full"></span>
+                      <a href="#">{{ post.published_date|date:"d M Y" }}</a> <span class="lnr lnr-calendar-full"></span>
                     </p>
                     <p class="view col-lg-12 col-md-12 col-6">
-                      <a href="#">{{ i.counted_views }}</a> <span class="lnr lnr-eye"></span>
+                      <a href="#">{{ post.counted_views }}</a> <span class="lnr lnr-eye"></span>
                     </p>
                     <p class="comments col-lg-12 col-md-12 col-6">
-                      <a href="#">{% comments_count i.id %} Comments</a> <span class="lnr lnr-bubble"></span>
+                      <a href="#">{% comments_count post.id %} Comments</a> <span class="lnr lnr-bubble"></span>
                     </p>
                   </div>
                 </div>
                 <div class="col-lg-9 col-md-9 ">
                   <div class="feature-img">
-                    <img class="img-fluid" src="{{ i.image.url }}" alt="">
+                    <img class="img-fluid" src="{{ post.image.url }}" alt="">
                   </div>
-                  <a class="posts-title" href="{% url 'blog:blog-single' pid=i.id %}">
-                    <h3>{{ i.title }}</h3>
+                  <a class="posts-title" href="{% url 'blog:blog-single' pid=post.id %}">
+                    <h3>{{ post.title }}</h3>
                   </a>
-                  <p class="excert">{{ i.content|truncatechars:50|safe }}</p>
-                  <a href="{% url 'blog:blog-single' i.id %}" class="primary-btn">View More</a>
-                  <a href="{% url 'blog:post-update' i.id %}"class="primary-btn">Edit</a>
-                  <a href="{% url 'blog:post-delete' i.id %}"class="primary-btn">Delete</a>
+                  <p class="excert">{{ post.content|truncatechars:50|safe }}</p>
+                  {% if post.status %}
+                    <a href="{% url 'blog:blog-single' post.id %}" class="primary-btn">View More</a>
+                  {% endif %}
+                  <a href="{% url 'blog:post-update' post.id %}"class="primary-btn">Edit</a>
+                  <a href="{% url 'blog:post-delete' post.id %}"class="primary-btn">Delete</a>
                 </div>
               </div>
             {% endfor %}
-            <nav class="blog-pagination justify-content-center d-flex">
-              <ul class="pagination">
-                <li class="page-item">
-                  {% if page_obj.has_previous %}
-                    <a href="?page={{ page_obj.previous_page_number }}"
-                       class="page-link"
-                       aria-label="Previous">
-                      <span aria-hidden="true">
-                        <span aria-hidden="true">&lsaquo;</span>
-                        <span class="lnr lnr-chevron-left">Last</span>
-                      </span>
-                    </a>
-                  {% endif %}
-                </li>
-                {% for index in page_obj.paginator.page_range %}
-                  {% if page_obj.number == index %}
-                    <li class="page-item active">
-                      <a href="?page={{ index }}" class="page-link">{{ index }}</a>
-                    </li>
-                  {% else %}
-                    <li class="page-item">
-                      <a href="?page={{ index }}" class="page-link">{{ index }}</a>
-                    </li>
-                  {% endif %}
-                {% endfor %}
-                {% if page_obj.has_next %}
-                  <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
-                    <a class="page-link"
-                       href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}"
-                       aria-label="Next">
-                      <span class="d-none d-md-inline">Next</span>
-                      <span aria-hidden="true">&rsaquo;</span>
-                    </a>
-                  </li>
-                {% endif %}
-              </ul>
-            </nav>
+            {% include "pagination.html" %}
           </div>
           {% include "blog/sidebar.html" %}
         </div>
