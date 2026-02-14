@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.db.models import F
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
@@ -79,11 +80,21 @@ class PostDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     model = Post
 
 
-class BlogList(ListView):
-    Model = Post
+class MyPosts(ListView, LoginRequiredMixin, OwnerRequiredMixin):
+    model = Post
     template_name = "blog/blog-home.html"
     context_object_name = "post"
-    paginate_by = 2
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user)
+
+
+class BlogList(ListView):
+    model = Post
+    template_name = "blog/blog-home.html"
+    context_object_name = "post"
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = Post.objects.filter(status=True)
@@ -127,6 +138,15 @@ class BlogDetail(DetailView):
         context["form"] = CommentForm()
 
         return context
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+
+        Post.objects.filter(pk=obj.pk).update(counted_views=F("counted_views") + 1)
+
+        obj.refresh_from_db()
+
+        return obj
 
     def post(self, request, *args, **kwargs):
         form = CommentForm(request.POST)

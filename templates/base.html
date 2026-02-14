@@ -71,16 +71,20 @@
                             <li>
                                 <a href="{% url 'website:about' %}">About</a>
                             </li>
-                            <li class="menu-has-children">
+                            <li>
                                 <a href="{% url 'blog:blog-home' %}">Blog</a>
                             </li>
                             <li>
                                 <a href="{% url "website:contact" %}">Contact</a>
                             </li>
-                            <li>
-                                <a href="{% url "blog:post-create" %}">Add Post</a>
-                            </li>
-                            {% if user.is_authenticated %}{% endif %}
+                            {% if user.is_authenticated %}
+                                <li>
+                                    <a href="{% url "blog:my-posts" %}">My Posts</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "blog:post-create" %}">Add Post</a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                     <!-- #nav-menu-container -->

@@ -59,7 +59,9 @@
                     <h3>{{ i.title }}</h3>
                   </a>
                   <p class="excert">{{ i.content|truncatechars:50|safe }}</p>
-                  <a href="{% url 'blog:blog-single' pid=i.id %}" class="primary-btn">View More</a>
+                  <a href="{% url 'blog:blog-single' i.id %}" class="primary-btn">View More</a>
+                  <a href="{% url 'blog:post-update' i.id %}"class="primary-btn">Edit</a>
+                  <a href="{% url 'blog:post-delete' i.id %}"class="primary-btn">Delete</a>
                 </div>
               </div>
             {% endfor %}

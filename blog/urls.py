@@ -9,6 +9,7 @@ urlpatterns = [
     path("category/<str:cat_name>", views.BlogList.as_view(), name="cat_link"),
     path("author/<str:author_name>", views.BlogList.as_view(), name="author_name"),
     path("search/", views.blog_search, name="search"),
+    path("myposts/", views.MyPosts.as_view(), name="my-posts"),
     path("posts/create/", views.PostCreateView.as_view(), name="post-create"),
     path("posts/<int:pk>/update/", views.PostUpdateView.as_view(), name="post-update"),
     path("posts/<int:pk>/delete/", views.PostDeleteView.as_view(), name="post-delete"),
