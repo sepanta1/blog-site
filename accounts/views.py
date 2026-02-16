@@ -1,64 +1,45 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from braces.views import AnonymousRequiredMixin
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import FormView
 
 
-def login_view(request):
-    """
-    Handles user login functionality.
+class UserLoginView(LoginView):
+    redirect_authenticated_user = True
+    success_url = reverse_lazy("website:home")
 
-    On GET: Displays the login form.
-    On POST: Authenticates the provided username and password.
-    If successful, logs the user in and redirects to the home page.
-    If failed, shows an error message on the login page.
-    """
-    msg = ''
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('website:home')
-        else:
-            msg = "Invalid credentials!"
-    return render(request, 'accounts/login.html', {'msg': msg})
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid username or password!")
+        return super().form_invalid(form)
+
+    def form_valid(self, form):
+        messages.success(self.request, "Logged in successfully.")
+        return super().form_valid(form)
 
 
-@login_required
-def logout_view(request):
-    """
-    Logs out the currently authenticated user and redirects to the home page.
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy("website:home")
 
-    The @login_required decorator ensures only logged-in users can access this view.
-    """
-    logout(request)
-    return redirect('website:home')
+    def dispatch(self, request, *args, **kwargs):
+        messages.info(request, "Logged out successfully.")
+        return super().dispatch(request, *args, **kwargs)
 
 
-def signup_view(request):
-    """
-    Handles user registration (sign-up).
+class SignUpView(AnonymousRequiredMixin, FormView):
+    template_name = "registration/signup.html"
+    form_class = UserCreationForm
+    success_url = reverse_lazy("accounts:login")
 
-    If the user is already authenticated, redirects them to the home page.
-    On GET: Displays an empty UserCreationForm.
-    On POST: Validates the form and creates a new user if data is valid.
-    On success: Shows success message and redirects to login page.
-    """
-    if not request.user.is_authenticated:
-        if request.method == "POST":
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(
-                    request, "Account created successfully! You can now log in.")
-                return redirect('accounts:login')
+    def form_invalid(self, form):
+        messages.error(self.request, "Invalid username or password!")
+        return super().form_invalid(form)
 
-    else:
-        return redirect('website:home')
-
-    form = UserCreationForm()
-    context = {'form': form}
-    return render(request, 'accounts/signup.html', context)
+    def form_valid(self, form):
+        form.save()
+        messages.success(
+            self.request, "Account created successfully! You can now log in."
+        )
+        return super().form_valid(form)

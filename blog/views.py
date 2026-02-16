@@ -1,5 +1,5 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import F
 from django.http import Http404
@@ -166,14 +166,16 @@ class CommentCreateView(CreateView):
         return self.object.parent_post.get_absolute_url()
 
 
-class PostCreateView(LoginRequiredMixin, CreateView):
+class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Post
     template_name = "blog/post-form.html"
     form_class = PostForm
     success_url = reverse_lazy("blog:blog-home")
+    success_message = "Post created successfully!"
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -182,11 +184,14 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
+class PostUpdateView(
+    LoginRequiredMixin, OwnerRequiredMixin, SuccessMessageMixin, UpdateView
+):
     model = Post
     template_name = "blog/update-post.html"
     form_class = PostForm
     success_url = reverse_lazy("blog:blog-home")
+    success_message = "Post updated successfully!"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -195,7 +200,10 @@ class PostUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
         return context
 
 
-class PostDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
+class PostDeleteView(
+    LoginRequiredMixin, OwnerRequiredMixin, SuccessMessageMixin, DeleteView
+):
     model = Post
     template_name = "blog/post-delete.html"
     success_url = reverse_lazy("blog:my-posts")
+    success_message = "Post deleted successfully."
