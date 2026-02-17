@@ -61,10 +61,3 @@ class CommentModelTest(TestCase):
         """Comment __str__ should return commenter's name"""
         self.assertEqual(str(self.comment), "Ali")
 
-    def test_comment_reply(self):
-        """Comment should support replies (self FK)"""
-        reply = Comment.objects.create(
-            name="Sara", message="I agree", parent_post=self.post, parent=self.comment
-        )
-        self.assertEqual(reply.parent, self.comment)
-        self.assertIn(reply, self.comment.replies.all())

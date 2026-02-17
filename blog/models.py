@@ -69,9 +69,6 @@ class Comment(TimeStampedModel, Postable):
     email = models.EmailField(blank=True, null=True)
     approved = models.BooleanField(default=True)
     parent_post = models.ForeignKey("Post", on_delete=models.CASCADE)
-    parent = models.ForeignKey(
-        "self", null=True, blank=True, on_delete=models.CASCADE, related_name="replies"
-    )
 
     class Meta:
         get_latest_by = "created_date"
