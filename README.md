@@ -1,4 +1,4 @@
-# Django Blog Website
+<img width="1874" height="963" alt="image" src="https://github.com/user-attachments/assets/e9b79b5c-aa0f-4c0a-91ae-1104b405eb6d" /># Django Blog Website
 
 A full-featured blog website built using the Django framework.
 This project is a personal blog application developed with Django.
@@ -67,6 +67,11 @@ python manage.py runserver
 *  Access the admin panel at /admin/ with your superuser credentials.
 *  Create posts and manage content through the interface.
 ## Screenshots:
+![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/home-list.png?raw=true)
+![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/home-detail.png?raw=true)
+![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/detail-comments.png?raw=true)
+You can check out more photos in the project-images folder in this repo!
+
 
 ## Contributing
 Contributions are welcome. Please open an issue or submit a pull request.
