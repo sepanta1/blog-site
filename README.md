@@ -1,4 +1,4 @@
-<img width="1874" height="963" alt="image" src="https://github.com/user-attachments/assets/e9b79b5c-aa0f-4c0a-91ae-1104b405eb6d" /># Django Blog Website
+# Django Blog Website
 
 A full-featured blog website built using the Django framework.
 This project is a personal blog application developed with Django.
