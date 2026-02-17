@@ -4,8 +4,7 @@
 {% block content %}
   <body>
     <!-- start banner Area -->
-    <section class="banner-area relative blog-home-banner" id="home">
-      <div class="overlay overlay-bg"></div>
+    <section class="banner-area" id="home">
       <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
           <div class="about-content blog-header-content col-lg-12">
@@ -17,7 +16,6 @@
     </section>
     <!-- End banner Area -->
     <br>
-    <br>
     <!-- Start post-content Area -->
     <section class="post-content-area">
       <div class="container">
@@ -27,7 +25,7 @@
               <div class="single-post row">
                 <div class="col-lg-3  col-md-3 meta-details">
                   <ul class="tags">
-                    {% for category in post.category.all %}
+                    {% for category in posts.category.all %}
                       <li>
                         <a href="{% url 'blog:cat_link' cat_name=category.name %}">
                           {{ category.name }}

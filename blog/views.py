@@ -42,7 +42,7 @@ class BlogList(ListView):
     model = Post
     template_name = "blog/blog-home.html"
     context_object_name = "posts"
-    paginate_by = 4
+    paginate_by = 2
 
     def get_queryset(self):
         queryset = Post.objects.all()
@@ -92,7 +92,7 @@ class BlogDetail(DetailView):
         context = super().get_context_data(**kwargs)
 
         context["comments"] = Comment.objects.filter(
-            parent_post=self.object, parent__isnull=True, approved=True
+            parent_post=self.object, approved=True
         )
 
         context["next_post"] = (
@@ -163,7 +163,7 @@ class BlogSearch(ListView):
 
 class CommentCreateView(CreateView):
     """
-    Creates a new comment or reply for a post
+    Creates a new comment for a post
     """
 
     model = Comment
