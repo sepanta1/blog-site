@@ -9,7 +9,9 @@ from django.views.generic import FormView
 
 class UserLoginView(LoginView):
     redirect_authenticated_user = True
-    success_url = reverse_lazy("website:home")
+
+    def get_success_url(self):
+        return reverse_lazy("website:home")
 
     def form_invalid(self, form):
         messages.error(self.request, "Invalid username or password!")
@@ -21,7 +23,10 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    next_page = reverse_lazy("website:home")
+    redirect_field_name = None
+
+    def get_success_url(self):
+        return reverse_lazy("website:home")
 
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, "Logged out successfully.")

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
@@ -19,7 +20,7 @@ from .models import Category, Comment, Post
 
 class OwnerRequiredMixin:
     """
-    Checks for the owner
+    Allows access only if the logged-in user owns the object
     """
 
     owner_field = "author"
@@ -34,6 +35,10 @@ class OwnerRequiredMixin:
 
 
 class BlogList(ListView):
+    """
+    Displays a list of blog posts with optional filters
+    """
+
     model = Post
     template_name = "blog/blog-home.html"
     context_object_name = "posts"
@@ -71,6 +76,10 @@ class BlogList(ListView):
 
 
 class BlogDetail(DetailView):
+    """
+    Shows a single blog post with comments and navigation
+    """
+
     model = Post
     template_name = "blog/blog-single.html"
     context_object_name = "post"
@@ -133,6 +142,10 @@ class BlogDetail(DetailView):
 
 
 class BlogSearch(ListView):
+    """
+    Simple search view for published blog posts
+    """
+
     model = Post
     template_name = "blog/blog-home.html"
     context_object_name = "posts"
@@ -149,6 +162,10 @@ class BlogSearch(ListView):
 
 
 class CommentCreateView(CreateView):
+    """
+    Creates a new comment or reply for a post
+    """
+
     model = Comment
     form_class = CommentForm
 
@@ -167,6 +184,10 @@ class CommentCreateView(CreateView):
 
 
 class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    """
+    Allows logged-in users to create a new post
+    """
+
     model = Post
     template_name = "blog/post-form.html"
     form_class = PostForm
@@ -187,6 +208,10 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class PostUpdateView(
     LoginRequiredMixin, OwnerRequiredMixin, SuccessMessageMixin, UpdateView
 ):
+    """
+    Allows post owners to update their posts
+    """
+
     model = Post
     template_name = "blog/update-post.html"
     form_class = PostForm
@@ -203,6 +228,10 @@ class PostUpdateView(
 class PostDeleteView(
     LoginRequiredMixin, OwnerRequiredMixin, SuccessMessageMixin, DeleteView
 ):
+    """
+    Allows post owners to delete their posts
+    """
+
     model = Post
     template_name = "blog/post-delete.html"
     success_url = reverse_lazy("blog:my-posts")

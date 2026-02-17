@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    # In production use set mysite.settings.dev to mysite.settings.prod!
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings.dev")
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

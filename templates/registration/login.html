@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Basic Login Form</title>
+        <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+              crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-card">
+                {% if messages %}
+                    <div class="container mt-3">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                                 role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="login-header">
+                    <h2>Login In</h2>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+                <form class="login-form"
+                      id="loginForm"
+                      method="post"
+                      action="{% url "accounts:login" %}"
+                      novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-wrapper">
+                            <input type="text"
+                                   id="username"
+                                   name="username"
+                                   required
+                                   placeholder="username">
+                        </div>
+                        <span class="error-message" id="usernameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper password-wrapper">
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   required
+                                   placeholder="current-password">
+                            <button type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Toggle password visibility">
+                                <span class="eye-icon"></span>
+                            </button>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+                <div class="signup-link">
+                    <p>
+                        Don't have an account? <a href="{% url "accounts:signup" %}">Create one</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="{% static "js/form-utils.js" %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                crossorigin="anonymous"></script>
+    </body>
+</html>
