@@ -12,7 +12,7 @@ It utilizes a ready-made frontend template for the user interface and leverages 
 *  User registration, login, and authentication
 *  Create, edit, and delete blog posts with rich text editing (TinyMCE)
 *  Image uploads for posts
-*  Hierarchical and threaded comment system
+*  comment system
 *  Post categorization and tagging
 *  Full-text search across posts
 *  Simple CAPTCHA for forms (to prevent spam)
