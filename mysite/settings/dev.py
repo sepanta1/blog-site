@@ -1,14 +1,19 @@
 from .base import *
+from decouple import config
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# for django sites framework
+
+# For Django's sites framework
 SITE_ID = 2
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+INSTALLED_APPS += [
+    "debug_toolbar",
+]
+MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware"] + MIDDLEWARE
 
 DATABASES = {
     "default": {
@@ -22,9 +27,4 @@ STATIC_ROOT = BASE_DIR / "static"
 
 STATICFILES_DIRS = [
     BASE_DIR / "statics",
-]
-
-INSTALLED_APPS += [
-    "debug_toolbar",
-    "django_extensions",
 ]

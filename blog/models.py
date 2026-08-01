@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from taggit.managers import TaggableManager
@@ -34,7 +34,9 @@ class Post(TimeStampedModel):
     image = models.ImageField(
         upload_to="blog/", default="blog/default.webp", null=True, blank=True
     )
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True
+    )
     title = models.CharField(max_length=255)
     content = HTMLField()
     tags = TaggableManager()

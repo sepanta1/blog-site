@@ -1,9 +1,7 @@
 import os
 from pathlib import Path
-
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
-if not SECRET_KEY:
-    raise RuntimeError("DJANGO_SECRET_KEY is not set")
+from decouple import config 
+SECRET_KEY = config('SECRET_KEY')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,6 +20,7 @@ MULTI_CAPTCHA_ADMIN = {
 LOGIN_REDIRECT_URL = "website:home"
 LOGOUT_REDIRECT_URL = "website:home"
 
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 INSTALLED_APPS = [
     "django.contrib.sites",
@@ -50,7 +49,6 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
