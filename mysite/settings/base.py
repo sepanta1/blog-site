@@ -20,7 +20,6 @@ MULTI_CAPTCHA_ADMIN = {
 LOGIN_REDIRECT_URL = "website:home"
 LOGOUT_REDIRECT_URL = "website:home"
 
-AUTH_USER_MODEL = "accounts.CustomUser"
 
 INSTALLED_APPS = [
     "django.contrib.sites",
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
     "accounts",
     "website",
     # 3rd party apps
+    "rest_framework",
     "captcha",
     "multi_captcha_admin",
     "taggit",
