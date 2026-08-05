@@ -51,8 +51,12 @@
                 </div>
                 <div class="col-lg-9 col-md-9 ">
                   <div class="feature-img">
-                    <img class="img-fluid" src="{{ post.image.url }}" alt="">
-                  </div>
+                    {% if post.image %}
+                      <img class="img-fluid" src="{{ post.image.url }}" alt="">
+                    {% else %}
+                      <img class="img-fluid" src="{% static 'img/default-post.jpg' %}" alt="">
+                    {% endif %}
+                </div>
                   <a class="posts-title" href="{% url 'blog:blog-single' pid=post.id %}">
                     <h3>{{ post.title }}</h3>
                   </a>
