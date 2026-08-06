@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.humanize",
+    # for captcha 3rd party btw
+    "multi_captcha_admin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,7 +40,6 @@ INSTALLED_APPS = [
     # 3rd party apps
     "rest_framework",
     "captcha",
-    "multi_captcha_admin",
     "taggit",
     "tinymce",
     "robots",
