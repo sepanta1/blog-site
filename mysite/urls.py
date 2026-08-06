@@ -35,7 +35,6 @@ sitemaps = {
 }
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/", include("blog.urls")),
     path("", include("website.urls")),
     path("blog/", include("blog.urls")),
     path("accounts/", include("accounts.urls")),
@@ -51,6 +50,9 @@ urlpatterns = [
     path("captcha/", include("captcha.urls")),
     # tinymce editor module
     path("tinymce/", include("tinymce.urls")),
+    # api v1
+    path("api/v1/", include("blog.urls")),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
