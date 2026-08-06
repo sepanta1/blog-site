@@ -1,139 +1,240 @@
-{% load static %}
-{% load humanize %}
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-    <head>
-        <!-- Mobile Specific Meta -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Favicon-->
-        <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-        <!-- Author Meta -->
-        <meta name="author" content="colorlib">
-        <!-- Meta Description -->
-        <meta name="description" content="">
-        <!-- Meta Keyword -->
-        <meta name="keywords" content="">
-        <!-- meta character set -->
-        <meta charset="UTF-8">
-        <!-- Site Title -->
-        <title>sepanta</title>
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        
-        <!-- CSS -->
-        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-        <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
-        <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
-        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    </head>
-    <body>
-        <header id="header">
-            <div class="container main-menu">
-                <div class="row align-items-center justify-content-between d-flex">
-                    <nav id="nav-menu-container">
-                        <ul class="nav-menu">
-                            <li><a href="{% url 'website:home' %}">Home</a></li>
-                            <li><a href="{% url 'website:about' %}">About</a></li>
-                            <li><a href="{% url 'blog:blog-home' %}">Blog</a></li>
-                            <li><a href="{% url "website:contact" %}">Contact</a></li>
-                            {% if user.is_authenticated %}
-                                <li><a href="{% url "accounts:logout" %}">Logout</a></li>
-                                <li><a href="{% url "blog:my-posts" %}">My Posts</a></li>
-                                <li><a href="{% url "blog:my-drafts" %}">My Drafts</a></li>
-                                <li><a href="{% url "blog:post-create" %}">Add Post</a></li>
-                            {% else %}
-                                <li><a href="{% url 'accounts:login' %}">Login</a></li>
-                                <li><a href="{% url "accounts:signup" %}">SignUp</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
+{% load static %} {% load humanize %}
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" />
+    <meta name="author" content="colorlib" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>sepanta</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+    <style>
+      /* ---- Mobile fixes ---- */
+      /* Make sure the toggle button is visible only on mobile */
+      #mobile-nav-toggle {
+        display: none;
+      }
+      @media (max-width: 991px) {
+        #mobile-nav-toggle {
+          display: inline-block;
+          position: absolute;
+          top: 18px;
+          right: 0;
+          z-index: 9999;
+          font-size: 24px;
+          background: transparent;
+          border: 0;
+          color: #222;
+          cursor: pointer;
+        }
+      }
+
+      /* Newsletter form: keep input + button on one row on small screens */
+      .subscription .input-group {
+        flex-wrap: nowrap;
+      }
+      .subscription .input-group input[type="email"] {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      /* Footer columns stack nicely */
+      .footer-area .single-footer-widget {
+        margin-bottom: 30px;
+      }
+      @media (max-width: 767px) {
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        .footer-social {
+          margin-top: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <div class="container main-menu">
+        <div class="row align-items-center justify-content-between d-flex">
+          <div id="logo">
+            <a href="{% url 'website:home' %}"
+              ><img
+                src="{% static 'img/logo.png' %}"
+                alt="logo"
+                style="max-height: 50px"
+            /></a>
+          </div>
+
+          <!-- Mobile hamburger toggle -->
+          <button
+            type="button"
+            id="mobile-nav-toggle"
+            aria-label="Toggle navigation"
+          >
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <nav id="nav-menu-container">
+            <ul class="nav-menu">
+              <li><a href="{% url 'website:home' %}">Home</a></li>
+              <li><a href="{% url 'website:about' %}">About</a></li>
+              <li><a href="{% url 'blog:blog-home' %}">Blog</a></li>
+              <li><a href="{% url 'website:contact' %}">Contact</a></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+              <li><a href="{% url 'blog:my-posts' %}">My Posts</a></li>
+              <li><a href="{% url 'blog:my-drafts' %}">My Drafts</a></li>
+              <li><a href="{% url 'blog:post-create' %}">Add Post</a></li>
+              {% else %}
+              <li><a href="{% url 'accounts:login' %}">Login</a></li>
+              <li><a href="{% url 'accounts:signup' %}">SignUp</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+        <!-- Bootstrap 4 syntax (matches your bootstrap.css) -->
+        <div
+          class="alert alert-{{ message.tags }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }}
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="footer-area section-gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>About Us</h6>
+              <p>
+                The world has become so fast paced that people don’t want to
+                stand by reading a page of information, they would much rather
+                look at a presentation and understand the message.
+              </p>
             </div>
-            {% if messages %}
-                <div class="container mt-3">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    {% endfor %}
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>Newsletter</h6>
+              <p>Stay updated with the latest news and posts.</p>
+              <form
+                action="{% url 'website:news' %}"
+                method="post"
+                class="subscription relative"
+              >
+                {% csrf_token %}
+                <div class="input-group d-flex flex-row">
+                  <input
+                    name="email"
+                    class="form-control"
+                    placeholder="Email Address"
+                    required
+                    type="email"
+                  />
+                  <div class="input-group-append">
+                    <button type="submit" class="btn bb-btn">
+                      Add <i class="fa fa-paper-plane"></i>
+                    </button>
+                  </div>
                 </div>
-            {% endif %}
-        </header>
-
-        {% block content %}{% endblock %}
-
-        <!-- start footer Area -->
-        <footer class="footer-area section-gap">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>About Us</h6>
-                            <p>
-                                The world has become so fast paced that people don’t want to stand by reading a page of
-                                information, they would much rather look at a presentation and understand the message.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>Newsletter</h6>
-                            <p>Stay updated with the latest news and posts.</p>
-                            <div>
-                                <form action="{% url 'website:news' %}" method="post" class="subscription relative">
-                                    {% csrf_token %}
-                                    <div class="input-group d-flex flex-row">
-                                        <input name="email"
-                                               placeholder="Email Address"
-                                               onfocus="this.placeholder = ''"
-                                               onblur="this.placeholder = 'Email Address'"
-                                               required
-                                               type="email">
-                                        <button type="submit" class="btn bb-btn">
-                                            Add <i class="fas fa-paper-plane"></i>
-                                        </button>
-                                    </div>
-                                    <div class="mt-10 info"></div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row footer-bottom d-flex justify-content-between align-items-center">
-                    <p class="col-lg-8 col-sm-12 footer-text m-0">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
-                        with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                    <div class="col-lg-4 col-sm-12 footer-social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-dribbble"></i></a>
-                        <a href="#"><i class="fa fa-behance"></i></a>
-                    </div>
-                </div>
+                <div class="mt-10 info"></div>
+              </form>
             </div>
-        </footer>
-        <!-- End footer Area -->
+          </div>
+        </div>
+        <div
+          class="row footer-bottom d-flex justify-content-between align-items-center"
+        >
+          <p class="col-lg-8 col-sm-12 footer-text m-0">
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved | This template is made with
+            <i class="fa fa-heart-o" aria-hidden="true"></i> by
+            <a href="https://colorlib.com" target="_blank">Colorlib</a>
+          </p>
+          <div class="col-lg-4 col-sm-12 footer-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-dribbble"></i></a>
+            <a href="#"><i class="fa fa-behance"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-        <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
-        <script src="{% static 'js/popper.min.js' %}"></script>
-        <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/jquery-ui.js' %}"></script>
-        <script src="{% static 'js/easing.min.js' %}"></script>
-        <script src="{% static 'js/hoverIntent.js' %}"></script>
-        <script src="{% static 'js/superfish.min.js' %}"></script>
-        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
-        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-        <script src="{% static 'js/mail-script.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
-    </body>
+    <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/easing.min.js' %}"></script>
+    <script src="{% static 'js/hoverIntent.js' %}"></script>
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Mobile nav toggle behavior (in case main.js doesn't include it) -->
+    <script>
+      (function () {
+        var toggle = document.getElementById("mobile-nav-toggle");
+        var menu = document.getElementById("nav-menu-container");
+        if (!toggle || !menu) return;
+
+        toggle.addEventListener("click", function () {
+          menu.classList.toggle("mobile-nav-open");
+        });
+
+        // Close when a link is clicked
+        menu.addEventListener("click", function (e) {
+          if (e.target.tagName === "A") {
+            menu.classList.remove("mobile-nav-open");
+          }
+        });
+      })();
+    </script>
+  </body>
 </html>
