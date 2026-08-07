@@ -3,12 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
-
-# Import debug toolbar URLs (only active in DEBUG mode)
-from debug_toolbar.toolbar import debug_toolbar_urls
-
 from blog.sitemaps import BlogSitemap
-
 # Import custom sitemap classes
 from website.sitemaps import StaticViewSitemap
 
@@ -40,4 +35,6 @@ urlpatterns = [
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += debug_toolbar_urls()
+if 'debug_toolbar' in settings.INSTALLED_APPS:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+    urlpatterns += debug_toolbar_urls()
