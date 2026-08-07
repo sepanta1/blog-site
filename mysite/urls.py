@@ -1,20 +1,3 @@
-"""
-URL configuration for mysite project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-
-Key features included:
-- Admin interface
-- Main website, blog, and accounts apps
-- Sitemap for SEO (static pages + blog posts)
-- Robots.txt handling
-- CAPTCHA integration
-- TinyMCE rich text editor URLs
-- Serving static and media files during development
-- Django Debug Toolbar (development only)
-
-"""
 
 # Import debug toolbar URLs (only active in DEBUG mode)
 from debug_toolbar.toolbar import debug_toolbar_urls
@@ -36,6 +19,7 @@ sitemaps = {
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("website.urls")),
+    path("api/v1/", include("blog.api_urls")),
     path("blog/", include("blog.urls")),
     path("accounts/", include("accounts.urls")),
     # robots module
