@@ -1,5 +1,7 @@
 asgiref==3.9.0
+dj-rest-auth==7.2.0
 Django==4.2.23
+django-allauth==65.19.0
 django-braces==1.17.0
 django-debug-toolbar==6.0.0
 django-multi-captcha-admin==2.0.0

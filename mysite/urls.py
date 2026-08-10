@@ -32,6 +32,10 @@ urlpatterns = [
     # api v1
     path("api/v1/", include("blog.api_urls")),
     path("api-auth/", include("rest_framework.urls")),
+    path("api/v1/dj-rest-auth/", include("dj_rest_auth.urls")),
+    path("api/v1/dj-rest-auth/registration/", 
+            include("dj_rest_auth.registration.urls")),
+
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

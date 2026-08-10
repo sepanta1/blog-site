@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     "website",
     # 3rd party apps
     "rest_framework",
+    "rest_framework.authtoken", 
+    "dj_rest_auth", 
     "captcha",
     "taggit",
     "tinymce",
     "robots",
+    "allauth", 
+    "allauth.account", 
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
+
 ]
 
 MIDDLEWARE = [
@@ -53,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "mysite.urls"
@@ -68,11 +76,12 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request", 
             ],
         },
     },
 ]
-
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 
