@@ -75,9 +75,27 @@
                 </div>
             </div>
         </div>
+
         <script src="{% static "js/form-utils.js" %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
                 crossorigin="anonymous"></script>
+
+        <!-- Password visibility toggle -->
+        <script>
+            (function () {
+                const toggle = document.getElementById('passwordToggle');
+                const passwordInput = document.getElementById('password');
+
+                if (!toggle || !passwordInput) return;
+
+                toggle.addEventListener('click', function () {
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    toggle.classList.toggle('is-visible', isPassword);
+                    toggle.setAttribute('aria-pressed', String(isPassword));
+                });
+            })();
+        </script>
     </body>
 </html>
