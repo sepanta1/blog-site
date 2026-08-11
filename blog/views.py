@@ -42,7 +42,7 @@ class BlogList(ListView):
     model = Post
     template_name = "blog/blog-home.html"
     context_object_name = "posts"
-    paginate_by = 2
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Post.objects.all()
