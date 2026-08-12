@@ -6,6 +6,12 @@ from django.urls import include, path
 from blog.sitemaps import BlogSitemap
 # Import custom sitemap classes
 from website.sitemaps import StaticViewSitemap
+from drf_spectacular.views import (
+SpectacularAPIView,
+SpectacularRedocView,
+SpectacularSwaggerView,
+)
+
 
 sitemaps = {
     "static": StaticViewSitemap,
@@ -35,6 +41,11 @@ urlpatterns = [
     path("api/v1/dj-rest-auth/", include("dj_rest_auth.urls")),
     path("api/v1/dj-rest-auth/registration/", 
             include("dj_rest_auth.registration.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("api/schema/redoc/", SpectacularRedocView.as_view(
+                                    url_name="schema"), name="redoc",),
+    path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(
+                url_name="schema"), name="swagger-ui"), 
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
