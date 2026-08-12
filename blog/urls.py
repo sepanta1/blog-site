@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .api_views import PostList, PostDetail
+
 app_name = "blog"
 urlpatterns = [
     path("blog-home/", views.BlogList.as_view(), name="blog-home"),
@@ -19,7 +19,5 @@ urlpatterns = [
         views.CommentCreateView.as_view(),
         name="comment-create",
     ),
-    # api v1
-    path("", PostList.as_view(), name="post_list"),
-    path("<int:pk>/", PostDetail.as_view(), name="post_detail"),
+
 ]
