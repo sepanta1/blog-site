@@ -7,9 +7,9 @@ from blog.sitemaps import BlogSitemap
 # Import custom sitemap classes
 from website.sitemaps import StaticViewSitemap
 from drf_spectacular.views import (
-SpectacularAPIView,
-SpectacularRedocView,
-SpectacularSwaggerView,
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
 )
 
 
@@ -20,7 +20,7 @@ sitemaps = {
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("website.urls")),
-    
+
     path("blog/", include("blog.urls")),
     path("accounts/", include("accounts.urls")),
     # robots module
@@ -39,13 +39,13 @@ urlpatterns = [
     path("api/v1/", include("blog.api_urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/v1/dj-rest-auth/", include("dj_rest_auth.urls")),
-    path("api/v1/dj-rest-auth/registration/", 
-            include("dj_rest_auth.registration.urls")),
+    path("api/v1/dj-rest-auth/registration/",
+         include("dj_rest_auth.registration.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/redoc/", SpectacularRedocView.as_view(
-                                    url_name="schema"), name="redoc",),
+        url_name="schema"), name="redoc",),
     path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(
-                url_name="schema"), name="swagger-ui"), 
+        url_name="schema"), name="swagger-ui"),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

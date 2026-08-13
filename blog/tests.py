@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from .models import Category, Comment, Post
 
+
 class BlogTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -12,19 +13,21 @@ class BlogTests(TestCase):
         username="testuser",
         email="test@email.com",
         password="secret",
-        )
+    )
     cls.post = Post.objects.create(
-            author=self.user,
-            title="Test Post",
-            content="<p>Post content</p>",
-            status=True,
-            published_date=timezone.now(),
-        )
+        author=self.user,
+        title="Test Post",
+        content="<p>Post content</p>",
+        status=True,
+        published_date=timezone.now(),
+    )
+
     def test_post_model(self):
         self.assertEqual(self.post.author.username, "testuser")
         self.assertEqual(self.post.title, "A good title")
         self.assertEqual(self.post.body, "Nice body content")
         self.assertEqual(str(self.post), "A good title")
+
 
 class PostModelTest(TestCase):
     """
@@ -54,7 +57,8 @@ class PostModelTest(TestCase):
     def test_get_absolute_url(self):
         """Post get_absolute_url should return correct URL"""
         url = self.post.get_absolute_url()
-        self.assertEqual(url, reverse("blog:blog-single", kwargs={"pid": self.post.id}))
+        self.assertEqual(url, reverse("blog:blog-single",
+                         kwargs={"pid": self.post.id}))
 
 
 class CommentModelTest(TestCase):
@@ -63,7 +67,8 @@ class CommentModelTest(TestCase):
     """
 
     def setUp(self):
-        self.user = User.objects.create_user(username="commenter", password="password")
+        self.user = User.objects.create_user(
+            username="commenter", password="password")
         self.post = Post.objects.create(
             author=self.user,
             title="Post for comments",
@@ -80,4 +85,3 @@ class CommentModelTest(TestCase):
     def test_comment_str(self):
         """Comment __str__ should return commenter's name"""
         self.assertEqual(str(self.comment), "Ali")
-

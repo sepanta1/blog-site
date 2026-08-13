@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from decouple import config 
+from decouple import config
 SECRET_KEY = config('SECRET_KEY')
 
 
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     # my apps
     "blog",
@@ -39,14 +40,14 @@ INSTALLED_APPS = [
     "website",
     # 3rd party apps
     "rest_framework",
-    "rest_framework.authtoken", 
-    "dj_rest_auth", 
+    "rest_framework.authtoken",
+    "dj_rest_auth",
     "captcha",
     "taggit",
     "tinymce",
     "robots",
-    "allauth", 
-    "allauth.account", 
+    "allauth",
+    "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
     "drf_spectacular",
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -77,12 +79,12 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "django.template.context_processors.request", 
+                "django.template.context_processors.request",
             ],
         },
     },
 ]
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 
@@ -107,17 +109,17 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [ 
-    "rest_framework.authentication.SessionAuthentication",
-    "rest_framework.authentication.TokenAuthentication",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
     ],
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema", 
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
 }
 SPECTACULAR_SETTINGS = {
-"TITLE": "Blog API Project",
-"DESCRIPTION": "A sample blog to learn about DRF",
-"VERSION": "1.0.0",
+    "TITLE": "Blog API Project",
+    "DESCRIPTION": "A sample blog to learn about DRF",
+    "VERSION": "1.0.0",
 
 }
 

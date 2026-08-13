@@ -114,7 +114,8 @@ class BlogDetail(DetailView):
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
 
-        Post.objects.filter(pk=obj.pk).update(counted_views=F("counted_views") + 1)
+        Post.objects.filter(pk=obj.pk).update(
+            counted_views=F("counted_views") + 1)
 
         obj.refresh_from_db()
 

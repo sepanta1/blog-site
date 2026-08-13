@@ -12,6 +12,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     )
     author = serializers.StringRelatedField(read_only=True)
     image = serializers.ImageField(required=False)
+
     class Meta:
         model = Post
         fields = (
@@ -28,8 +29,9 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             "created_date",
         )
         read_only_fields = ("counted_views", "created_date")
-    
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model =get_user_model()
-        fields= ("id",'username')
+        model = get_user_model()
+        fields = ("id", 'username')

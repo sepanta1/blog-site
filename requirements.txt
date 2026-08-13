@@ -16,10 +16,12 @@ django-taggit-serializer==0.1.7
 django-tinymce==4.1.0
 djangorestframework==3.17.1
 drf-spectacular==0.30.0
+gunicorn==26.0.0
 idna==3.18
 inflection==0.5.1
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
+packaging==26.3
 pillow==11.3.0
 psycopg==3.3.4
 psycopg-binary==3.3.4
@@ -34,3 +36,4 @@ typing_extensions==4.14.1
 tzdata==2025.2
 uritemplate==4.2.0
 urllib3==2.7.0
+whitenoise==6.12.0

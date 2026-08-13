@@ -32,7 +32,7 @@ class Category(models.Model):
 class Post(TimeStampedModel):
 
     image = models.ImageField(
-        upload_to="blog/", default="blog/default.webp",blank=True
+        upload_to="blog/", default="blog/default.webp", blank=True
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True
