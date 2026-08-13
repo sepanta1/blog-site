@@ -18,7 +18,10 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}" />
@@ -28,46 +31,55 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
     <style>
-      /* ---- Mobile fixes ---- */
-      /* Make sure the toggle button is visible only on mobile */
-      #mobile-nav-toggle {
-        display: none;
-      }
       @media (max-width: 991px) {
-        #mobile-nav-toggle {
-          display: inline-block;
+        #nav-menu-container {
+          display: none;
           position: absolute;
-          top: 18px;
-          right: 0;
-          z-index: 9999;
-          font-size: 24px;
-          background: transparent;
-          border: 0;
-          color: #222;
-          cursor: pointer;
+          top: 70px;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          z-index: 9998;
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-      }
 
-      /* Newsletter form: keep input + button on one row on small screens */
-      .subscription .input-group {
-        flex-wrap: nowrap;
-      }
-      .subscription .input-group input[type="email"] {
-        flex: 1 1 auto;
-        min-width: 0;
-      }
+        #nav-menu-container.mobile-nav-open {
+          display: block !important;
+        }
 
-      /* Footer columns stack nicely */
-      .footer-area .single-footer-widget {
-        margin-bottom: 30px;
-      }
-      @media (max-width: 767px) {
-        .footer-bottom {
+        /* Force real flex layout, don't just hope it's already flex */
+        #nav-menu-container .nav-menu {
+          display: flex !important;
           flex-direction: column;
-          text-align: center;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          list-style: none;
         }
-        .footer-social {
-          margin-top: 15px;
+
+        /* Reset desktop Superfish positioning/floats */
+        #nav-menu-container .nav-menu li {
+          float: none !important;
+          position: static !important;
+          width: 100%;
+          text-align: left;
+          border-bottom: 1px solid #eee;
+        }
+
+        #nav-menu-container .nav-menu li a {
+          display: block;
+          float: none !important;
+          padding: 15px 20px;
+          color: #333 !important; /* override any light/white desktop nav text color */
+          background: transparent !important;
+        }
+
+        /* Kill any submenu dropdown positioning if this theme has one */
+        #nav-menu-container .nav-menu ul {
+          position: static !important;
+          display: block;
+          box-shadow: none;
+          width: 100%;
         }
       }
     </style>
@@ -225,7 +237,6 @@
           menu.classList.toggle("mobile-nav-open");
         });
 
-        // Close when a link is clicked
         menu.addEventListener("click", function (e) {
           if (e.target.tagName === "A") {
             menu.classList.remove("mobile-nav-open");
