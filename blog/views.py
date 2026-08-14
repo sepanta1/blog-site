@@ -17,6 +17,12 @@ from django.views.generic import (
 from .forms import CommentForm, PostForm
 from .models import Category, Comment, Post
 
+from django.views.generic import TemplateView
+
+
+class ApiIndexView(TemplateView):
+    template_name = "blog/api-index.html"
+
 
 class OwnerRequiredMixin:
     """

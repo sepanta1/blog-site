@@ -1,0 +1,114 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<section class="relative about-banner">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white">API Endpoints</h1>
+        <p class="text-white">Browsable links to the blog's REST API (v1).</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="api-index-section" style="padding: 50px 0">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="card mb-4">
+          <div class="card-header">
+            <strong>Documentation</strong>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>Swagger UI</span>
+              <a href="{% url 'swagger-ui' %}" class="btn btn-sm bb-btn"
+                >Open</a
+              >
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>Redoc</span>
+              <a href="{% url 'redoc' %}" class="btn btn-sm bb-btn">Open</a>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>OpenAPI Schema (raw)</span>
+              <a href="{% url 'schema' %}" class="btn btn-sm bb-btn">Open</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <strong>Posts</strong>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>List / Create Posts</span>
+              <a href="/api/v1/" class="btn btn-sm bb-btn">GET/POST</a>
+            </li>
+            <li class="list-group-item">
+              <span>Retrieve / Update / Delete a Post</span>
+              <code>/api/v1/&lt;id&gt;/</code>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <strong>Users</strong>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <span>List Users</span>
+              <a href="/api/v1/users/" class="btn btn-sm bb-btn">GET</a>
+            </li>
+            <li class="list-group-item">
+              <span>Retrieve a User</span>
+              <code>/api/v1/users/&lt;id&gt;/</code>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <strong>Authentication (dj-rest-auth)</strong>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <span>Login</span>
+              <code>/api/v1/dj-rest-auth/login/</code>
+            </li>
+            <li class="list-group-item">
+              <span>Logout</span>
+              <code>/api/v1/dj-rest-auth/logout/</code>
+            </li>
+            <li class="list-group-item">
+              <span>Password Reset</span>
+              <code>/api/v1/dj-rest-auth/password/reset/</code>
+            </li>
+            <li class="list-group-item">
+              <span>Register</span>
+              <code>/api/v1/dj-rest-auth/registration/</code>
+            </li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <a href="/api-auth/login/" class="btn bb-btn">
+            Browsable API Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -23,5 +23,5 @@ urlpatterns = [
         views.CommentCreateView.as_view(),
         name="comment-create",
     ),
-
+    path("api-docs/", views.ApiIndexView.as_view(), name="api-index"),
 ]
