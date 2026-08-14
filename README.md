@@ -1,80 +1,106 @@
 # Django Blog Website
 
-A full-featured blog website built using the Django framework.
-This project is a personal blog application developed with Django.
-It utilizes a ready-made frontend template for the user interface and leverages many of Django's built-in features, such as authentication, admin panel, and ORM. Additionally, it integrates useful third-party packages to enhance functionality.
+A full-featured blog application built with Django. It uses a ready-made
+frontend template for the UI and leans on Django's built-in features
+(authentication, admin, ORM) alongside several third-party packages, plus
+a Django REST Framework (DRF) API layer for managing and exposing posts.
 
 ## Features
 
-*  User authentication (register, login, logout)
-*  Blog post CRUD (create, read, update, delete)
-*  Rich text editor using TinyMCE
-*  Categories and tags (django‑taggit)
-*  Comment system on posts
-*  Contact form
-*  Django Admin customization
-*  CAPTCHA protection in admin
-*  SEO helpers (robots.txt, sitemaps)
-*  Separate development & production settings
-*  Environment variable–based secrets
+- User authentication (register, login, logout)
+- Blog post CRUD (create, read, update, delete)
+- Rich text editor using TinyMCE
+- Categories and tags (django-taggit)
+- Comment system on posts
+- Contact form
+- Django Admin customization
+- CAPTCHA protection in admin
+- SEO helpers (robots.txt, sitemaps)
+- REST API with DRF (posts, tags, categories) + auto-generated OpenAPI schema
+- Separate development & production settings
+- Environment variable–based secrets
 
 ## Technologies Used
 
-*  Backend: Django (Python)
-*  Frontend: HTML, CSS, JavaScript (with Bootstrap)
-*  Database: SQLite (default) or PostgreSQL in production
-*  Third-party packages: TinyMCE, Django Taggit,Django Simple Captcha
+- **Backend:** Django (Python)
+- **API:** Django REST Framework, drf-spectacular
+- **Frontend:** HTML, CSS, JavaScript (Bootstrap)
+- **Database:** SQLite (default/dev) or PostgreSQL (production)
+- **Third-party packages:** TinyMCE, django-taggit, django-simple-captcha
 
 ## Installation
+
 1. Clone the repository:
-```
-git clone https://github.com/sepanta1/blog-site.git
-```
+
+   ```bash
+   git clone https://github.com/sepanta1/Blog_Website.git
+   ```
+
 2. Navigate to the project directory:
-```
-cd blog-site
-```
+
+   ```bash
+   cd Blog_Website
+   ```
+
 3. Create a virtual environment:
-```
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-4. Set environment variables:
-```bash 
-export DJANGO_ENV=dev
-export DJANGO_SECRET_KEY=your-secret-key
-```
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+4. Set environment variables (create a `.env` file in the project root, or export them in your shell):
+
+   ```bash
+   DJANGO_ENV=dev
+   SECRET_KEY=your-secret-key
+   ```
+
 5. Install dependencies:
-```
-pip install -r requirements.txt
-```
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
 6. Apply migrations:
-```
-python manage.py migrate
-```
+
+   ```bash
+   python manage.py migrate
+   ```
+
 7. Create a superuser:
-```
-python manage.py createsuperuser
-```
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
 8. Run the development server:
-```
-python manage.py runserver
-```
-9. Visit http://127.0.0.1:8000/ in your browser.
+
+   ```bash
+   python manage.py runserver
+   ```
+
+9. Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 ## Usage
 
-*  Access the admin panel at /admin/ with your superuser credentials.
-*  Create posts and manage content through the interface.
-## Screenshots:
-![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/home-list.png?raw=true)
-![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/home-detail.png?raw=true)
-![image alt](https://github.com/sepanta1/blog-site/blob/main/project-images/detail-comments.png?raw=true)
-You can check out more photos in the project-images folder in this repo!
+- Access the admin panel at `/admin/` with your superuser credentials.
+- Create posts and manage content through the web interface.
+- Browse the REST API at `/api/v1/`, and interactive docs at `/api/schema/swagger-ui/`.
 
+## Screenshots
+
+| | |
+|---|---|
+| ![Home list](project-images/home-list.png) | ![Post detail](project-images/home-detail.png) |
+| ![Comments](project-images/detail-comments.png) | ![Create post](project-images/create-post.png) |
+
+More screenshots are available in the [`project-images`](project-images) folder.
 
 ## Contributing
+
 Contributions are welcome. Please open an issue or submit a pull request.
 
 ## License
+
 MIT License
