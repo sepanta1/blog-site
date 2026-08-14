@@ -2,16 +2,20 @@ from rest_framework import permissions
 
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
+    """
+    API is login-only. Any authenticated user can read (list/retrieve)
+    any post, but only the post's author can update or delete it.
+    """
+
     def has_permission(self, request, view):
-        # Authenticated users only can see list view
         if request.user.is_authenticated:
             return True
         return False
 
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request so we'll always
-        # allow GET, HEAD, or OPTIONS requests
+       
+        # Any authenticated user can read (GET/HEAD/OPTIONS)
         if request.method in permissions.SAFE_METHODS:
             return True
-        # Write permissions are only allowed to the author of a post
+        # Only the author can write (POST/PUT/PATCH/DELETE)
         return obj.author == request.user
