@@ -6,29 +6,6 @@ from django.utils import timezone
 from .models import Category, Comment, Post
 
 
-class BlogTests(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-    cls.user = get_user_model().objects.create_user(
-        username="testuser",
-        email="test@email.com",
-        password="secret",
-    )
-    cls.post = Post.objects.create(
-        author=self.user,
-        title="Test Post",
-        content="<p>Post content</p>",
-        status=True,
-        published_date=timezone.now(),
-    )
-
-    def test_post_model(self):
-        self.assertEqual(self.post.author.username, "testuser")
-        self.assertEqual(self.post.title, "A good title")
-        self.assertEqual(self.post.body, "Nice body content")
-        self.assertEqual(str(self.post), "A good title")
-
-
 class PostModelTest(TestCase):
     """
     Tests Post model fields, relationships, and methods
@@ -39,7 +16,7 @@ class PostModelTest(TestCase):
         self.user = User.objects.create_user(
             username="testuser", password="password123"
         )
-        self.category = Category.objects.create(name="Backend")
+        self.category = Category.objects.create(name="testcategory")
 
         self.post = Post.objects.create(
             author=self.user,
