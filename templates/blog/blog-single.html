@@ -1,193 +1,190 @@
-{% extends "base.html" %}
-{% load static %}
-{% load humanize %}
-{% load blog_tags %}
-{% block content %}
-  <body>
-    {% comment %} navbar {% endcomment %}
-    <section class="relative about-banner">
-      <div class="overlay overlay-bg"></div>
-      <div class="container">
-        <div class="row d-flex align-items-center justify-content-center">
-          <div class="about-content col-lg-12">
-            <h1 class="text-white">Blog Details Page</h1>
-            <p class="text-white link-nav">
-              <a href="{% url 'website:home' %}">Home</a>
-              <span class="lnr lnr-arrow-right"></span><a href="{% url 'blog:blog-home' %}">Blog</a>
-            </p>
-          </div>
-        </div>
+{% extends "base.html" %} {% load static %} {% load humanize %} {% load
+blog_tags %} {% block content %} {% comment %} navbar {% endcomment %}
+<section class="relative about-banner">
+  <div class="overlay overlay-bg"></div>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="about-content col-lg-12">
+        <h1 class="text-white">Blog Details Page</h1>
+        <p class="text-white link-nav">
+          <a href="{% url 'website:home' %}">Home</a>
+          <span class="lnr lnr-arrow-right"></span
+          ><a href="{% url 'blog:blog-home' %}">Blog</a>
+        </p>
       </div>
-    </section>
-    {% comment %} post {% endcomment %}
-    <section class="post-content-area single-post-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 posts-list">
-            <div class="single-post row ">
-              <div class="col-lg-12">
-                <div class="feature-img">
-                  <img class="img-fluid" src="{{ post.image.url }}" alt="" />
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 meta-details">
-                <ul class="tags">
-                  {% if post.tags.exists %}
-                    <ul class="tags">
-                      {% for tag in post.tags.all %}
-                        <li>
-                          <a href="#">{{ tag }}
-                            {% if not forloop.last %},{% endif %}
-                          </a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </ul>
-                <div class="user-details row">
-                  <p class="user-name col-lg-12 col-md-12 col-6">
-                    <a href="#">{{ post.author.username }}</a> <span class="lnr lnr-user"></span>
-                  </p>
-                  <p class="date col-lg-12 col-md-12 col-6">
-                    <a href="#">{{ post.created_date|timesince }} Ago</a>
-                    <span class="lnr lnr-calendar-full"></span>
-                  </p>
-                  <p class="view col-lg-12 col-md-12 col-6">
-                    <a href="#">{{ post.counted_views }} Views</a> <span class="lnr lnr-eye"></span>
-                  </p>
-                  <p class="comments col-lg-12 col-md-12 col-6">
-                    <a href="#">{{ comments|length }} comments</a>
-                    <span class="lnr lnr-bubble"></span>
-                  </p>
-                  <ul class="social-links col-lg-12 col-md-12 col-6">
-                    <li>
-                      <a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="fa fa-github"></i></a>
-                    </li>
-                    <li>
-                      <a href="#"><i class="fa fa-behance"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-lg-9 col-md-9">
-                <h3 class="mt-20 mb-20">{{ post.title }}</h3>
-                <p class="excert">{{ post.content|safe }}</p>
-              </div>
+    </div>
+  </div>
+</section>
+{% comment %} post {% endcomment %}
+<section class="post-content-area single-post-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        <div class="single-post row">
+          <div class="col-lg-12">
+            <div class="feature-img">
+              <img class="img-fluid" src="{{ post.image.url }}" alt="" />
             </div>
-            <div class="navigation-area">
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                  {% if prev_post %}
-                    <div class="thumb">
-                      <a href="#">
-                        <img class="img-fluid" src="{% static 'img/blog/prev.jpg' %}" alt="" />
-                      </a>
-                    </div>
-                    <div class="arrow">
-                      <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
-                    </div>
-                    <div class="detials">
-                      <p>Prev Post</p>
-                      <a href="{% url "blog:blog-single" pid=prev_post.id %}">
-                        <h4>{{ prev_post.title }}</h4>
-                      </a>
-                    </div>
-                  </div>
-                {% endif %}
-                {% if next_post %}
-                  <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                    <div class="detials">
-                      <p>Next Post</p>
-                      <a href="{% url "blog:blog-single" pid=next_post.id %}">
-                        <h4>{{ next_post.title }}</h4>
-                      </a>
-                    </div>
-                    <div class="arrow">
-                      <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
-                    </div>
-                    <div class="thumb">
-                      <a href="#">
-                        <img class="img-fluid" src="{% static 'img/blog/next.jpg' %}" alt="" />
-                      </a>
-                    </div>
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-            {% comment %} comments part {% endcomment %}
-            <div class="comments-area">
-              <h4>{{ comments|length }} comment</h4>
-              {% for comment in comments %}
-                <div class="comment-list">
-                  <div class="single-comment justify-content-between d-flex">
-                    <div class="user justify-content-between d-flex">
-                      <div class="thumb">
-                        <img src="{% static 'img/blog/c1.jpg' %}" alt="" />
-                      </div>
-                      <div class="desc">
-                        <h5>
-                          <a href="#">{{ comment.name }}</a>
-                        </h5>
-                        <p class="date">{{ comment.created_date|naturalday }}</p>
-                        <p class="comment">{{ comment.message }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          </div>
+          <div class="col-lg-3 col-md-3 meta-details">
+            {% if post.tags.exists %}
+            <ul class="tags">
+              {% for tag in post.tags.all %}
+              <li>
+                <a href="#">{{ tag }} {% if not forloop.last %},{% endif %} </a>
+              </li>
               {% endfor %}
-            </div>
-            {% comment %} comment form {% endcomment %}
-            <div class="comment-form">
-              <h4>Leave a Comment</h4>
-              <form method="post" action={% url "blog:blog-single" pid=post.id %}>
-                {% csrf_token %}
-                <input type="hidden" name="parent_post" value={{ post.id }}>
-                <div class="form-group form-inline">
-                  {% if request.user.is_authenticated %}
-                    <input type="hidden" name="name" value={{ request.user.username }}>
-                    <input type="hidden" name="email" value={{ request.user.email }}>
-                  {% else %}
-                    <div class="form-group col-lg-6 col-md-12 name">
-                      <input type="text"
-                             class="form-control"
-                             name="name"
-                             placeholder="Enter Name"
-                             onfocus="this.placeholder = ''"
-                             onblur="this.placeholder = 'Enter Name'" />
-                    </div>
-                    <div class="form-group col-lg-6 col-md-12 email">
-                      <input type="email"
-                             class="form-control"
-                             name="email"
-                             placeholder="Enter email address"
-                             onfocus="this.placeholder = ''"
-                             onblur="this.placeholder = 'Enter email address'" />
-                    </div>
-                  {% endif %}
-                </div>
-                <div class="form-group">
-                  <textarea class="form-control mb-10"
-                            rows="5"
-                            name="message"
-                            placeholder="Messege"
-                            onfocus="this.placeholder = ''"
-                            onblur="this.placeholder = 'Messege'"
-                            required=""></textarea>
-                </div>
-                <button type="submit" class="primary-btn text-uppercase">Post Comment</button>
-              </form>
+            </ul>
+            {% endif %}
+            <div class="user-details row">
+              <p class="user-name col-lg-12 col-md-12 col-6">
+                <a href="#">{{ post.author.username }}</a>
+                <span class="lnr lnr-user"></span>
+              </p>
+              <p class="date col-lg-12 col-md-12 col-6">
+                <a href="#">{{ post.created_date|timesince }} Ago</a>
+                <span class="lnr lnr-calendar-full"></span>
+              </p>
+              <p class="view col-lg-12 col-md-12 col-6">
+                <a href="#">{{ post.counted_views }} Views</a>
+                <span class="lnr lnr-eye"></span>
+              </p>
+              <p class="comments col-lg-12 col-md-12 col-6">
+                <a href="#">{{ comments|length }} comments</a>
+                <span class="lnr lnr-bubble"></span>
+              </p>
+              <ul class="social-links col-lg-12 col-md-12 col-6">
+                <li>
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-github"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-behance"></i></a>
+                </li>
+              </ul>
             </div>
           </div>
-          {% include "blog/sidebar.html" %}
+          <div class="col-lg-9 col-md-9">
+            <h3 class="mt-20 mb-20">{{ post.title }}</h3>
+            <p class="excert">{{ post.content|safe }}</p>
+          </div>
+        </div>
+        <div class="navigation-area">
+          <div class="row">
+            {% if prev_post %}
+            <div class="col-lg-6 col-md-6 col-12 mb-3 mb-lg-0">
+              <a
+                href="{% url 'blog:blog-single' pid=prev_post.id %}"
+                class="d-block p-3 border rounded text-decoration-none h-100"
+              >
+                <p class="mb-1 text-muted text-uppercase small">
+                  <span class="lnr lnr-arrow-left mr-1"></span>Prev Post
+                </p>
+                <h4 class="mb-0">{{ prev_post.title }}</h4>
+              </a>
+            </div>
+            {% endif %} {% if next_post %}
+            <div
+              class="col-lg-6 col-md-6 col-12 {% if not prev_post %}offset-lg-6{% endif %}"
+            >
+              <a
+                href="{% url 'blog:blog-single' pid=next_post.id %}"
+                class="d-block p-3 border rounded text-decoration-none h-100 text-lg-right"
+              >
+                <p class="mb-1 text-muted text-uppercase small">
+                  Next Post<span class="lnr lnr-arrow-right ml-1"></span>
+                </p>
+                <h4 class="mb-0">{{ next_post.title }}</h4>
+              </a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% comment %} comments part {% endcomment %}
+        <div class="comments-area">
+          <h4>{{ comments|length }} comment</h4>
+          {% for comment in comments %}
+          <div class="comment-list">
+            <div class="single-comment">
+              <div class="user">
+                <div class="desc">
+                  <h5>
+                    <a href="#">{{ comment.name }}</a>
+                  </h5>
+                  <p class="date">{{ comment.created_date|naturalday }}</p>
+                  <p class="comment">{{ comment.message }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% comment %} comment form {% endcomment %}
+        <div class="comment-form">
+          <h4>Leave a Comment</h4>
+          <form method="post" action="{% url 'blog:blog-single' pid=post.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="parent_post" value="{{ post.id }}" />
+            <div class="form-group form-inline">
+              {% if request.user.is_authenticated %}
+              <input
+                type="hidden"
+                name="name"
+                value="{{ request.user.username }}"
+              />
+              <input
+                type="hidden"
+                name="email"
+                value="{{ request.user.email }}"
+              />
+              {% else %}
+              <div class="form-group col-lg-6 col-md-12 name">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Enter Name"
+                  onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Enter Name'"
+                />
+              </div>
+              <div class="form-group col-lg-6 col-md-12 email">
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="Enter email address"
+                  onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Enter email address'"
+                />
+              </div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <textarea
+                class="form-control mb-10"
+                rows="5"
+                name="message"
+                placeholder="Messege"
+                onfocus="this.placeholder = ''"
+                onblur="this.placeholder = 'Messege'"
+                required=""
+              ></textarea>
+            </div>
+            <button type="submit" class="primary-btn text-uppercase">
+              Post Comment
+            </button>
+          </form>
         </div>
       </div>
-    </section>
-    <!-- End post-content Area -->
-  </body>
+      {% include "blog/sidebar.html" %}
+    </div>
+  </div>
+</section>
+<!-- End post-content Area -->
 {% endblock %}
