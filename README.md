@@ -50,7 +50,7 @@ python manage.py test
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/sepanta1/Blog_Website.git
+   git clone https://github.com/sepanta1/blog-site.git
 ```
 2. Navigate to the project directory:
 ```bash
