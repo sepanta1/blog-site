@@ -90,10 +90,10 @@ a Django REST Framework (DRF) API layer for managing and exposing posts.
 
 ## Screenshots
 
-| | |
-|---|---|
-| ![Home list](project-images/home-list.png) | ![Post detail](project-images/home-detail.png) |
-| ![Comments](project-images/detail-comments.png) | ![Create post](project-images/create-post.png) |
+|                                                      |                                                         |
+| ---------------------------------------------------- | ------------------------------------------------------- |
+| ![Home list](project-images/blog-home.png)           | ![Post detail](project-images/blog-detail.png)          |
+| ![Comments](project-images/blog-detail-comments.png) | ![API schema](project-images/api-schema-swagger-ui.png) |
 
 More screenshots are available in the [`project-images`](project-images) folder.
 
