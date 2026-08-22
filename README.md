@@ -5,6 +5,10 @@ frontend template for the UI and leans on Django's built-in features
 (authentication, admin, ORM) alongside several third-party packages, plus
 a Django REST Framework (DRF) API layer for managing and exposing posts.
 
+> **Note:** The frontend template (HTML/CSS/SCSS) is adapted from a
+> third-party theme. Backend work — models, views, DRF API, auth, admin
+> customization, and tests — is original.
+
 ## Features
 
 - User authentication (register, login, logout)
@@ -28,58 +32,56 @@ a Django REST Framework (DRF) API layer for managing and exposing posts.
 - **Database:** SQLite (default/dev) or PostgreSQL (production)
 - **Third-party packages:** TinyMCE, django-taggit, django-simple-captcha
 
+## Testing
+
+The project includes a test suite covering models, views, and the DRF API
+layer (serializers, endpoints, permissions).
+
+```bash
+python manage.py test
+```
+
+## Development Practices
+
+- Adopted [Conventional Commits](https://www.conventionalcommits.org/)
+  partway through development for clearer, more scannable history going forward.
+
 ## Installation
 
 1. Clone the repository:
-
-   ```bash
+```bash
    git clone https://github.com/sepanta1/Blog_Website.git
-   ```
-
+```
 2. Navigate to the project directory:
-
-   ```bash
+```bash
    cd Blog_Website
-   ```
-
+```
 3. Create a virtual environment:
-
-   ```bash
+```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
+```
 4. Set environment variables (create a `.env` file in the project root, or export them in your shell):
-
-   ```bash
+```bash
    DJANGO_ENV=dev
    SECRET_KEY=your-secret-key
-   ```
-
+```
 5. Install dependencies:
-
-   ```bash
+```bash
    pip install -r requirements.txt
-   ```
-
+```
 6. Apply migrations:
-
-   ```bash
+```bash
    python manage.py migrate
-   ```
-
+```
 7. Create a superuser:
-
-   ```bash
+```bash
    python manage.py createsuperuser
-   ```
-
+```
 8. Run the development server:
-
-   ```bash
+```bash
    python manage.py runserver
-   ```
-
+```
 9. Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 ## Usage
