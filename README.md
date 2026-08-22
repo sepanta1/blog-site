@@ -49,39 +49,39 @@ python manage.py test
 ## Installation
 
 1. Clone the repository:
-```bash
+   ```bash
    git clone https://github.com/sepanta1/blog-site.git
-```
+   ```
 2. Navigate to the project directory:
-```bash
-   cd Blog_Website
-```
+   ```bash
+   cd blog-site
+   ```
 3. Create a virtual environment:
-```bash
+   ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+   ```
 4. Set environment variables (create a `.env` file in the project root, or export them in your shell):
-```bash
+   ```bash
    DJANGO_ENV=dev
    SECRET_KEY=your-secret-key
-```
+   ```
 5. Install dependencies:
-```bash
+   ```bash
    pip install -r requirements.txt
-```
+   ```
 6. Apply migrations:
-```bash
+   ```bash
    python manage.py migrate
-```
+   ```
 7. Create a superuser:
-```bash
+   ```bash
    python manage.py createsuperuser
-```
+   ```
 8. Run the development server:
-```bash
+   ```bash
    python manage.py runserver
-```
+   ```
 9. Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 ## Usage
